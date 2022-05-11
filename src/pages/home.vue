@@ -32,6 +32,11 @@ export default {
 	},
 	onLoad() {
 		const access_token = uni.getStorageSync('access_token')
+		if(!access_token){
+			uni.switchTab({
+				url: '/pages/me'
+			})
+		}
 		uni.request({
 			url: process.env.VUE_APP_API_ENDPOINT + '/api/relation/be_liked',
 			header: {
@@ -41,9 +46,6 @@ export default {
 			success: (res) => {
 				if (res.statusCode !== 200) {
 					console.log(res.data.message)
-					uni.switchTab({
-						url: '/pages/me'
-					})
 				} else {
 					this.beLiked = res.data.data
 				}
