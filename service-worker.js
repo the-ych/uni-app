@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.e697264c8efc33aa2d005e73f9307159.js"
+  "/precache-manifest.24789b87400fd088178ba89a1fe877b7.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "test-uniapp"});
