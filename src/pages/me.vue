@@ -241,7 +241,6 @@
 		line-height: 90rpx;
 		color: #0faeff;
 		text-align: center;
-		font-family: texticons;
 		margin-right: 20rpx;
 	}
 
@@ -259,6 +258,5 @@
 		line-height: 90rpx;
 		color: #555;
 		text-align: right;
-		font-family: texticons;
 	}
 </style>
