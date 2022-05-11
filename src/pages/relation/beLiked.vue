@@ -28,10 +28,10 @@ export default {
 	onLoad() {
 		const access_token = uni.getStorageSync('access_token')
 		if (!access_token) {
-			uni.switchTab({
-				url: '/pages/me'
+			uni.reLaunch({
+				url: '/pages/me?action=toast&message=您尚未登入&type=error'
 			})
-		}
+		} 
 		uni.request({
 			url: process.env.VUE_APP_API_ENDPOINT + '/api/relation/be_liked',
 			header: {

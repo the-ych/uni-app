@@ -69,9 +69,16 @@ export default {
 	},
 	onLoad(options) {
 		if (options.action === 'toast') {
-			uni.showToast({
-				title: options.message
-			})
+			if(options.type){
+				uni.showToast({
+					title: options.message,
+					icon: options.type
+				})
+			} else {
+				uni.showToast({
+					title: options.message,
+				})
+			}
 		}
 
 		try {
@@ -113,6 +120,7 @@ export default {
 				success(res) {
 					uni.removeStorageSync('access_token');
 					uni.removeStorageSync('name');
+					uni.removeStorageSync('avatar');
 					uni.reLaunch({
 						url: '/pages/me?action=toast&message=登出成功'
 					});
