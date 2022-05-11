@@ -86,9 +86,11 @@
 		},
 		methods: {
 			auth() {
-				uni.navigateTo({
-					url: '/pages/auth/login'
-				})
+				if(!this.logined){
+					uni.navigateTo({
+						url: '/pages/auth/login'
+					})
+				}
 			},
 			logout() {
 				const access_token = uni.getStorageSync('access_token')
@@ -122,8 +124,8 @@
 	
 	.content {
 		text-align: center;
-		height: 400upx;
-		margin-top: 200upx;
+		height: 400rpx;
+		margin-top: 200rpx;
 		padding: 10rpx;
 	}
 
@@ -144,8 +146,8 @@
 		bottom: var(--window-bottom);
 		left: 0;
 		right: 0;
-		height: 0.5*200upx;
-		line-height: 0.5*200upx;
+		height: 0.5*200rpx;
+		line-height: 0.5*200rpx;
 		background: #fff;
 	}
 

@@ -49,7 +49,11 @@ export default {
 				}
 			},
 			fail: (res) => {
-				alert('error' + res)
+				uni.showToast({
+					title: res,
+					icon: "error",
+					mask: true
+				})
 			}
 		})
 	},
@@ -60,8 +64,8 @@ export default {
 <style>
 .content {
 	text-align: center;
-	height: 400 upx;
-	margin-top: 20 upx;
+	height: 400rpx;
+	margin-top: 20rpx;
 }
 
 .card-actions {

@@ -33,6 +33,7 @@ export default {
 			rules: {
 				email: {
 					rules: [{
+						required: true,
 						format: 'email',
 						errorMessage: '請輸入正確的信箱',
 					}]
@@ -56,38 +57,51 @@ export default {
 	},
 	methods: {
 		submit() {
-			const {
-				email,
-				password
-			} = this.formData
-			console.log(this.device_name)
-			uni.request({
-				url: process.env.VUE_APP_API_ENDPOINT + '/api/auth/login',
-				header: {
-					'Accept': 'application/json'
-				},
-				method: "POST",
-				data: {
+			this.$refs.form.validate().then(res => {
+
+				const {
 					email,
-					password,
-					device_name: this.device_name
-				},
-				success: (res) => {
-					if (res.statusCode === 401 && res.data.error === 'auth/invalid-account') {
-						this.$refs.askRegisterDialog.open()
-					} else if (res.statusCode === 200) {
-						uni.setStorageSync('access_token', res.data.access_token)
-						uni.setStorageSync('name', name)
-						uni.reLaunch({
-							url: '/pages/me?action=toast&message=登入成功'
-						});
-					} else {
-						alert(res.data.message)
+					password
+				} = this.formData
+				console.log(this.device_name)
+				uni.request({
+					url: process.env.VUE_APP_API_ENDPOINT + '/api/auth/login',
+					header: {
+						'Accept': 'application/json'
+					},
+					method: "POST",
+					data: {
+						email,
+						password,
+						device_name: this.device_name
+					},
+					success: (res) => {
+						if (res.statusCode === 401 && res.data.error === 'auth/invalid-account') {
+							this.$refs.askRegisterDialog.open()
+						} else if (res.statusCode === 200) {
+							uni.setStorageSync('access_token', res.data.access_token)
+							uni.setStorageSync('name', name)
+							uni.reLaunch({
+								url: '/pages/me?action=toast&message=登入成功'
+							});
+						} else {
+							uni.showToast({
+								title: res.data.message,
+								icon: "error",
+								mask: true
+							})
+						}
+					},
+					fail: (res) => {
+						uni.showToast({
+							title: res,
+							icon: "error",
+							mask: true
+						})
 					}
-				},
-				fail: (res) => {
-					alert('error' + res)
-				}
+				})
+			}).catch(err => {
+				console.log('表单错误信息：', err);
 			})
 		},
 		dialogClose() {
@@ -105,7 +119,7 @@ export default {
 <style>
 .content {
 	text-align: center;
-	height: 400 upx;
-	padding: 10 rpx;
+	height: 400rpx;
+	padding: 10rpx;
 }
 </style>

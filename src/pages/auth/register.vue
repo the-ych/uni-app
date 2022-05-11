@@ -63,10 +63,11 @@ export default {
 			},
 			rules: {
 				name: {
-					rules: [{
-						required: true,
-						errorMessage: '請輸入姓名',
-					},
+					rules: [
+						{
+							required: true,
+							errorMessage: '請輸入姓名',
+						},
 						{
 							minLength: 2,
 							maxLength: 4,
@@ -74,9 +75,9 @@ export default {
 						}
 					]
 				},
-				// 对email字段进行必填验证
 				email: {
 					rules: [{
+						required: true,
 						format: 'email',
 						errorMessage: '請輸入正確的電子信箱',
 					}]
@@ -119,6 +120,7 @@ export default {
 	},
 	methods: {
 		submit() {
+			this.$refs.form.validate();
 			const {
 				name,
 				email,
@@ -167,12 +169,20 @@ export default {
 									}
 								},
 								fail(res) {
-									alert('error')
+									uni.showToast({
+										title: res,
+										icon: "error",
+										mask: true
+									})
 								}
 							})
 						})
 					} else {
-						alert('error' + res.data.message)
+						uni.showToast({
+							title: res.data.message,
+							icon: "error",
+							mask: true
+						})
 
 						uni.hideLoading({
 							title: '上傳中'
@@ -180,7 +190,11 @@ export default {
 					}
 				},
 				fail: (res) => {
-					alert('error' + res)
+					uni.showToast({
+						title: res,
+						icon: "error",
+						mask: true
+					})
 
 					uni.hideLoading({
 						title: '上傳中'
@@ -202,11 +216,11 @@ export default {
 <style>
 .content {
 	text-align: center;
-	height: 400 upx;
-	padding: 10 rpx;
+	height: 400rpx;
+	padding: 10rpx;
 }
 
 .action-button {
-	margin: 20 rpx;
+	margin: 20rpx;
 }
 </style>
