@@ -1,11 +1,28 @@
 <template>
 	<view class="content">
 		<view>
-			<uni-card cover="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/460d46d0-4fcc-11eb-8ff1-d5dcf8779628.png"
-			          :isFull="true" style="margin: 0 20rpx"
-
-			>
-				<text>这是一个带封面和操作栏的卡片示例，此示例展示了封面插槽和操作栏插槽的用法。</text>
+			<uni-card :isFull="true" style="margin: 40rpx 40rpx" v-for="(h, i) in homeInfo" :key="i">
+				<uni-swiper-dot class="uni-swiper-dot-box" @click="(e)=>clickSwipe(i,e)" :info="h.photos"
+				                :current="swipeCurrent[i]"
+				                mode="round" field="content">
+					<swiper class="swiper-box" :current="swipeDotIndex[i]" @change="(e)=>swipeChange(i,e)">
+						<swiper-item v-for="(item, index) in h.photos" :key="`${i}-${index}`">
+							<view class="swiper-item">
+								<image :src="endpoint + '/storage/' + item.path"></image>
+							</view>
+						</swiper-item>
+					</swiper>
+				</uni-swiper-dot>
+				<view style="display: flex;flex-direction: row;align-content: center">
+					<view>
+						<image style="background-color: black; height: 50px;width: 50px;border-radius: 50%;" :src="h.profile.avatar"></image>
+					</view>
+					<view style="margin-left: 30rpx;align-self: center">
+						<text style="text-align: left;font-size: 16pt;">
+							{{ h.name }}
+						</text>
+					</view>
+				</view>
 				<template v-slot:actions>
 					<view class="card-actions">
 						<view class="card-actions-item" @click="actionsClick('点赞')">
@@ -27,18 +44,21 @@
 export default {
 	data() {
 		return {
-			beLiked: []
+			endpoint: process.env.VUE_APP_API_ENDPOINT,
+			homeInfo: [],
+			swipeCurrent: {},
+			swipeDotIndex: {}
 		};
 	},
 	onLoad() {
 		const access_token = uni.getStorageSync('access_token')
-		if(!access_token){
+		if (!access_token) {
 			uni.switchTab({
 				url: '/pages/me'
 			})
 		}
 		uni.request({
-			url: process.env.VUE_APP_API_ENDPOINT + '/api/relation/be_liked',
+			url: process.env.VUE_APP_API_ENDPOINT + '/api/relation/home',
 			header: {
 				'Authorization': `Bearer ${access_token}`,
 				'Accept': 'application/json'
@@ -47,7 +67,12 @@ export default {
 				if (res.statusCode !== 200) {
 					console.log(res.data.message)
 				} else {
-					this.beLiked = res.data.data
+					console.log(res.data)
+					res.data.data.forEach((t, i) => {
+						this.swipeCurrent[i] = 0
+						this.swipeDotIndex[i] = 0
+					})
+					this.homeInfo = res.data.data
 				}
 			},
 			fail: (res) => {
@@ -59,7 +84,16 @@ export default {
 			}
 		})
 	},
-	methods: {}
+	methods: {
+		swipeChange(i, e) {
+			this.$set(this.swipeCurrent, i, e.detail.current)
+			this.$forceUpdate();
+		},
+		clickSwipe(i, e) {
+			this.$set(this.swipeDotIndex, i, e)
+			this.$forceUpdate();
+		}
+	}
 };
 </script>
 
@@ -94,5 +128,21 @@ export default {
 .cover-image {
 	flex: 1;
 	height: 150px
+}
+
+.swiper-box {
+	margin-bottom: 50rpx;
+	height: 200px;
+}
+
+.swiper-item {
+	/* #ifndef APP-NVUE */
+	display: flex;
+	/* #endif */
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 200px;
+	color: blue;
 }
 </style>

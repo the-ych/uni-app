@@ -80,7 +80,8 @@ export default {
 							this.$refs.askRegisterDialog.open()
 						} else if (res.statusCode === 200) {
 							uni.setStorageSync('access_token', res.data.access_token)
-							uni.setStorageSync('name', name)
+							uni.setStorageSync('name', res.data.data.name)
+							uni.setStorageSync('avatar', res.data.data.profile.avatar)
 							uni.reLaunch({
 								url: '/pages/me?action=toast&message=登入成功'
 							});

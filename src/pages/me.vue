@@ -76,10 +76,16 @@ export default {
 
 		try {
 			const value = uni.getStorageSync('access_token');
+
+			const avatar = uni.getStorageSync('avatar');
 			if (value) {
 				// 已登入
 				this.logined = true
 				this.name = uni.getStorageSync('name')
+			}
+
+			if(avatar){
+				this.avatarUrl = avatar
 			}
 		} catch (e) {
 			// error
@@ -105,14 +111,11 @@ export default {
 					'Authorization': `Bearer ${access_token}`
 				},
 				success(res) {
-					if (res.statusCode === 200) {
-						uni.removeStorageSync('access_token');
-						uni.removeStorageSync('name');
-
-						uni.reLaunch({
-							url: '/pages/me?action=toast&message=登出成功'
-						});
-					}
+					uni.removeStorageSync('access_token');
+					uni.removeStorageSync('name');
+					uni.reLaunch({
+						url: '/pages/me?action=toast&message=登出成功'
+					});
 				}
 			})
 		},
