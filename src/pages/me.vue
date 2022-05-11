@@ -16,7 +16,7 @@
 					<text class="navigat-arrow">&#xe65e;</text>
 				</view>-->
 				<!-- #ifdef APP-PLUS -->
-				<view v-if="logined" class="center-list-item border-bottom" @click="toInvite">
+				<view v-if="logined" class="center-list-item border-bottom pointer" @click="toInvite">
 					<text class="list-icon">&#xe65f;</text>
 					<text class="list-text">邀请好友</text>
 					<text class="navigat-arrow">&#xe65e;</text>
@@ -30,19 +30,19 @@
 				</view>-->
 			</view>
 			<view class="center-list">
-				<view class="center-list-item border-bottom">
+				<view class="center-list-item border-bottom pointer">
 					<text class="list-icon"><i class="fa-solid fa-circle-question"></i></text>
 					<text class="list-text">帮助与反馈</text>
 					<text class="navigat-arrow"><i class="fa-solid fa-chevron-right"></i></text>
 				</view>
-				<view class="center-list-item">
+				<view class="center-list-item pointer">
 					<text class="list-icon"><i class="fa-solid fa-book"></i></text>
 					<text class="list-text">服务条款及隐私</text>
 					<text class="navigat-arrow"><i class="fa-solid fa-chevron-right"></i></text>
 				</view>
 			</view>
 			<view class="center-list">
-				<view class="center-list-item">
+				<view class="center-list-item pointer">
 					<text class="list-icon"><i class="fa-solid fa-circle-info"></i></text>
 					<text class="list-text">关于应用</text>
 					<text class="navigat-arrow"><i class="fa-solid fa-chevron-right"></i></text>
@@ -175,7 +175,7 @@ button {
 
 .logo {
 	width: 750rpx;
-	height: 240rpx;
+	height: 200rpx;
 	padding: 20rpx;
 	box-sizing: border-box;
 	background-color: #0faeff;
@@ -183,8 +183,13 @@ button {
 	align-items: center;
 }
 
+.pointer {
+	cursor: pointer;
+}
+
 .logo-hover {
 	opacity: 0.8;
+	cursor: pointer;
 }
 
 .logo-img {
