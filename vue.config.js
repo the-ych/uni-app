@@ -1,8 +1,8 @@
 module.exports = {
     pwa: {
         manifestOptions: {
-            "name": "Demo",
-            "short_name": "Demo",
+            "name": "YCH",
+            "short_name": "YCH",
             "theme_color": "#4DBA87",
             "icons": [
                 {
@@ -120,7 +120,7 @@ module.exports = {
             "display": "standalone",
             "background_color": "#000000"
         },
-        name: 'Bogin',
+        name: 'YCH',
         themeColor: '#0faeff',
         msTileColor: '#000000',
         appleMobileWebAppCapable: 'yes',

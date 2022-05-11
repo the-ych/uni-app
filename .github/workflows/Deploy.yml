@@ -22,7 +22,10 @@ jobs:
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
 
       - name: Running Yarn Script
-        run: yarn install && yarn build:h5
+        run: |
+          yarn install 
+          yarn build:h5
+          echo 'ych.hsuan.app' > dist/build/h5/CNAME
 
       - name: upload files
         uses: actions/upload-artifact@v2
