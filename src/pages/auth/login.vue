@@ -4,10 +4,10 @@
 
 			<uni-forms ref="form" :modelValue="formData" :rules="rules">
 				<uni-forms-item label="信箱" name="email">
-					<uni-easyinput type="text" v-model="formData.email" placeholder="請輸入電子信箱" />
+					<uni-easyinput type="text" v-model="formData.email" placeholder="請輸入電子信箱"/>
 				</uni-forms-item>
 				<uni-forms-item label="密碼" name="password">
-					<uni-easyinput type="password" v-model="formData.password" placeholder="請輸入密碼" />
+					<uni-easyinput type="password" v-model="formData.password" placeholder="請輸入密碼"/>
 				</uni-forms-item>
 				<button @click="submit">登入 / 註冊</button>
 			</uni-forms>
@@ -15,98 +15,97 @@
 		</view>
 		<uni-popup ref="askRegisterDialog" type="dialog">
 			<uni-popup-dialog type="error" cancelText="取消" confirmText="註冊" title="帳號不存在" content="您輸入的帳號不存在,請註冊或重新輸入"
-				@confirm="dialogConfirm" @close="dialogClose"></uni-popup-dialog>
+			                  @confirm="dialogConfirm" @close="dialogClose"></uni-popup-dialog>
 		</uni-popup>
 	</view>
 </template>
 
 <script>
-	const config = require('../../config.json')
-	export default {
-		data() {
-			return {
-				formData: {
-					name: '',
-					email: '',
-					password: ''
+export default {
+	data() {
+		return {
+			formData: {
+				name: '',
+				email: '',
+				password: ''
+			},
+			device_name: '',
+			rules: {
+				email: {
+					rules: [{
+						format: 'email',
+						errorMessage: '請輸入正確的信箱',
+					}]
 				},
-				device_name: '',
-				rules: {
-					email: {
-						rules: [{
-							format: 'email',
-							errorMessage: '請輸入正確的信箱',
-						}]
-					},
-					password: {
-						rules: [{
-							required: true,
-							errorMessage: '請輸入密碼',
-						}]
-					}
+				password: {
+					rules: [{
+						required: true,
+						errorMessage: '請輸入密碼',
+					}]
 				}
 			}
-		},
-		onLoad() {
-			uni.getSystemInfo({
+		}
+	},
+	onLoad() {
+		uni.getSystemInfo({
+			success: (res) => {
+				this.device_name = (res.brand ? res.brand : '') + (res.model ? res.model : '') + ' ' + (res
+					.deviceId ? res.deviceId : '')
+			}
+		})
+	},
+	methods: {
+		submit() {
+			const {
+				email,
+				password
+			} = this.formData
+			console.log(this.device_name)
+			uni.request({
+				url: process.env.VUE_APP_API_ENDPOINT + '/api/auth/login',
+				header: {
+					'Accept': 'application/json'
+				},
+				method: "POST",
+				data: {
+					email,
+					password,
+					device_name: this.device_name
+				},
 				success: (res) => {
-					this.device_name = (res.brand ? res.brand : '') + (res.model ? res.model : '') + ' ' + (res
-						.deviceId ? res.deviceId : '')
+					if (res.statusCode === 401 && res.data.error === 'auth/invalid-account') {
+						this.$refs.askRegisterDialog.open()
+					} else if (res.statusCode === 200) {
+						uni.setStorageSync('access_token', res.data.access_token)
+						uni.setStorageSync('name', name)
+						uni.reLaunch({
+							url: '/pages/me?action=toast&message=登入成功'
+						});
+					} else {
+						alert(res.data.message)
+					}
+				},
+				fail: (res) => {
+					alert('error' + res)
 				}
 			})
 		},
-		methods: {
-			submit() {
-				const {
-					email,
-					password
-				} = this.formData
-				console.log(this.device_name)
-				uni.request({
-					url: config.endpoint + '/api/auth/login',
-					header: {
-						'Accept': 'application/json'
-					},
-					method: "POST",
-					data: {
-						email,
-						password,
-						device_name: this.device_name
-					},
-					success: (res) => {
-						if (res.statusCode === 401 && res.data.error === 'auth/invalid-account') {
-							this.$refs.askRegisterDialog.open()
-						} else if (res.statusCode === 200) {
-							uni.setStorageSync('access_token', res.data.access_token)
-							uni.setStorageSync('name', name)
-							uni.reLaunch({
-								url: '/pages/me?action=toast&message=登入成功'
-							});
-						} else {
-							alert(res.data.message)
-						}
-					},
-					fail: (res) => {
-						alert('error' + res)
-					}
-				})
-			},
-			dialogClose() {
-				this.$refs.askRegisterDialog.close()
-			},
-			dialogConfirm() {
-				uni.navigateTo({
-					url: `/pages/auth/register?email=${this.formData.email}&password=${this.formData.password}`
-				})
-			}
+		dialogClose() {
+			this.$refs.askRegisterDialog.close()
+		},
+		dialogConfirm() {
+			uni.navigateTo({
+				url: `/pages/auth/register?email=${this.formData.email}&password=${this.formData.password}`
+			})
 		}
 	}
+}
 </script>
 
 <style>
-	.content {
-		text-align: center;
-		height: 400upx;
-		padding: 10rpx;
-	}
+.content {
+	text-align: center;
+	height: 400 upx;
+	padding: 10 rpx;
+}
 </style>

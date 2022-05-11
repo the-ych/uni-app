@@ -57,8 +57,6 @@
 </template>
 
 <script>
-	const config = require('../config.json')
-
 	export default {
 		data() {
 			return {
@@ -95,7 +93,7 @@
 			logout() {
 				const access_token = uni.getStorageSync('access_token')
 				uni.request({
-					url: config.endpoint + '/api/auth/logout',
+					url: process.env.VUE_APP_API_ENDPOINT + '/api/auth/logout',
 					method: "POST",
 					data: {
 						access_token
