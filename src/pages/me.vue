@@ -49,7 +49,7 @@
 				</view>
 			</view>
 			<view class="btn-row place-bottom">
-				<button v-if="logined" class="primary" type="primary" :loading="logoutBtnLoading"
+				<button v-if="logined" class="primary" style="border-bottom-left-radius: 0;border-bottom-right-radius: 0;border-top-left-radius: 12pt;border-top-right-radius: 12pt;font-size: 16pt;" type="primary" :loading="logoutBtnLoading"
 				        @tap="logout">登出
 				</button>
 			</view>
@@ -158,8 +158,8 @@ export default {
 	bottom: var(--window-bottom);
 	left: 0;
 	right: 0;
-	height: calc(0.5 * 200rpx);
-	line-height: calc(0.5 * 200rpx);
+	height: calc(0.5 * 125rpx);
+	line-height: calc(0.5 *100rpx);
 	background: #fff;
 }
 
@@ -183,7 +183,7 @@ button {
 
 .logo {
 	width: 750rpx;
-	height: 200rpx;
+	height: 175rpx;
 	padding: 20rpx;
 	box-sizing: border-box;
 	background-color: #0faeff;
