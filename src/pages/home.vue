@@ -1,7 +1,7 @@
 <template>
 	<view class="content">
 		<view style="padding-bottom: 50rpx;">
-			<uni-card :isFull="true" style="margin: 40rpx 40rpx;" v-for="(h, i) in homeInfo" :key="i">
+			<uni-card :isFull="true" style="margin: 40rpx 40rpx;" v-for="(h, i) in homeInfo" :key="i" v-if="!cardHidden[h.id]">
 				<uni-swiper-dot class="uni-swiper-dot-box" @click="(e)=>clickSwipe(i,e)" :info="h.photos"
 				                :current="swipeCurrent[i]"
 				                mode="round" field="content">
@@ -15,7 +15,8 @@
 				</uni-swiper-dot>
 				<view style="display: flex;flex-direction: row;align-content: center">
 					<view>
-						<image style="background-color: black; height: 50px;width: 50px;border-radius: 50%;" :src="h.profile.avatar+`?nocache=${Math.random()}`"></image>
+						<image style="background-color: black; height: 50px;width: 50px;border-radius: 50%;"
+						       :src="h.profile.avatar+`?nocache=${Math.random()}`"></image>
 					</view>
 					<view style="margin-left: 30rpx;align-self: center">
 						<text style="text-align: left;font-size: 16pt;">
@@ -25,11 +26,11 @@
 				</view>
 				<template v-slot:actions>
 					<view class="card-actions">
-						<view class="card-actions-item" @click="actionsClick('点赞')">
+						<view class="card-actions-item" style="cursor: pointer" @click="like(h.id)">
 							<uni-icons type="heart-filled" size="18" color="#999"></uni-icons>
 							<text class="card-actions-item-text">喜歡</text>
 						</view>
-						<view class="card-actions-item" @click="actionsClick('评论')">
+						<view class="card-actions-item" style="cursor: pointer" @click="hate(h.id)">
 							<uni-icons type="closeempty" size="18" color="#999"></uni-icons>
 							<text class="card-actions-item-text">不喜歡</text>
 						</view>
@@ -41,17 +42,18 @@
 </template>
 
 <script>
+const access_token = uni.getStorageSync('access_token')
 export default {
 	data() {
 		return {
 			endpoint: process.env.VUE_APP_API_ENDPOINT,
 			homeInfo: [],
 			swipeCurrent: {},
-			swipeDotIndex: {}
+			swipeDotIndex: {},
+			cardHidden: {}
 		};
 	},
 	onLoad() {
-		const access_token = uni.getStorageSync('access_token')
 		if (!access_token) {
 			uni.reLaunch({
 				url: '/pages/me?action=toast&message=您尚未登入&type=error'
@@ -66,11 +68,20 @@ export default {
 			success: (res) => {
 				if (res.statusCode !== 200) {
 					console.log(res.data.message)
+					if(res.data.message === 'Unauthenticated.'){
+						uni.removeStorageSync('access_token');
+						uni.removeStorageSync('name');
+						uni.removeStorageSync('avatar');
+						uni.reLaunch({
+							url: '/pages/me?action=toast&message=您尚未登入&type=error'
+						})
+					}
 				} else {
 					console.log(res.data)
 					res.data.data.forEach((t, i) => {
 						this.swipeCurrent[i] = 0
 						this.swipeDotIndex[i] = 0
+						this.cardHidden[i] = false;
 					})
 					this.homeInfo = res.data.data
 				}
@@ -92,6 +103,62 @@ export default {
 		clickSwipe(i, e) {
 			this.$set(this.swipeDotIndex, i, e)
 			this.$forceUpdate();
+		},
+		like(user_id) {
+			uni.request({
+				url: process.env.VUE_APP_API_ENDPOINT + '/api/relation/like',
+				method: "POST",
+				header: {
+					'Authorization': `Bearer ${access_token}`,
+					'Accept': 'application/json'
+				},
+				data: {
+					user_id
+				},
+				success: (res) => {
+					if (res.statusCode !== 200) {
+						console.log(res.data.message)
+					} else {
+						this.cardHidden[user_id] = true
+						this.$forceUpdate();
+					}
+				},
+				fail: (res) => {
+					uni.showToast({
+						title: res,
+						icon: "error",
+						mask: true
+					})
+				}
+			})
+		},
+		hate(user_id) {
+			uni.request({
+				url: process.env.VUE_APP_API_ENDPOINT + '/api/relation/hate',
+				method: "POST",
+				header: {
+					'Authorization': `Bearer ${access_token}`,
+					'Accept': 'application/json'
+				},
+				data: {
+					user_id
+				},
+				success: (res) => {
+					if (res.statusCode !== 200) {
+						console.log(res.data.message)
+					} else {
+						this.cardHidden[user_id] = true
+						this.$forceUpdate();
+					}
+				},
+				fail: (res) => {
+					uni.showToast({
+						title: res,
+						icon: "error",
+						mask: true
+					})
+				}
+			})
 		}
 	}
 };
