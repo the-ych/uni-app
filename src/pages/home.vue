@@ -1,7 +1,7 @@
 <template>
 	<view class="content">
-		<view>
-			<uni-card :isFull="true" style="margin: 40rpx 40rpx" v-for="(h, i) in homeInfo" :key="i">
+		<view style="padding-bottom: 50rpx;">
+			<uni-card :isFull="true" style="margin: 40rpx 40rpx;" v-for="(h, i) in homeInfo" :key="i">
 				<uni-swiper-dot class="uni-swiper-dot-box" @click="(e)=>clickSwipe(i,e)" :info="h.photos"
 				                :current="swipeCurrent[i]"
 				                mode="round" field="content">
@@ -15,7 +15,7 @@
 				</uni-swiper-dot>
 				<view style="display: flex;flex-direction: row;align-content: center">
 					<view>
-						<image style="background-color: black; height: 50px;width: 50px;border-radius: 50%;" :src="h.profile.avatar"></image>
+						<image style="background-color: black; height: 50px;width: 50px;border-radius: 50%;" :src="h.profile.avatar+`?nocache=${Math.random()}`"></image>
 					</view>
 					<view style="margin-left: 30rpx;align-self: center">
 						<text style="text-align: left;font-size: 16pt;">
