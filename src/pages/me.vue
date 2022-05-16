@@ -44,7 +44,7 @@
 			<view class="center-list">
 				<view class="center-list-item pointer">
 					<text class="list-icon"><i class="fa-solid fa-circle-info"></i></text>
-					<text class="list-text">关于应用</text>
+					<text class="list-text">关于应用 (v{{ APP_VERSION }})</text>
 					<text class="navigat-arrow"><i class="fa-solid fa-chevron-right"></i></text>
 				</view>
 			</view>
@@ -58,13 +58,15 @@
 </template>
 
 <script>
+const APP_VERSION = process.env.VUE_APP_VERSION
 export default {
 	data() {
 		return {
 			name: '',
 			logined: false,
 			avatarUrl: '../static/logo.png',
-			logoutBtnLoading: false
+			logoutBtnLoading: false,
+			APP_VERSION
 		}
 	},
 	onLoad(options) {
