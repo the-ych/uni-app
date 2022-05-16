@@ -72,6 +72,9 @@ export default {
 		};
 	},
 	onLoad() {
+		uni.showLoading({
+			title: '加载中'
+		});
 		this.fetchData()
 	},
 	methods: {
@@ -80,6 +83,10 @@ export default {
 				url: '/api/relation/home',
 				auth: true,
 				success: (res) => {
+
+					uni.hideLoading({
+						title: '加载中'
+					});
 					if (res.statusCode !== 200) {
 						console.log(res.data.message)
 					} else {
