@@ -1,101 +1,121 @@
 <template>
 	<view class="content">
 		<view style="padding-bottom: 50rpx;">
-			<uni-card :isFull="true" style="margin: 40rpx 40rpx;" v-for="(h, i) in homeInfo" :key="i" v-if="!cardHidden[h.id]">
-				<uni-swiper-dot class="uni-swiper-dot-box" @click="(e)=>clickSwipe(i,e)" :info="h.photos"
-				                :current="swipeCurrent[i]"
-				                mode="round" field="content">
-					<swiper class="swiper-box" :current="swipeDotIndex[i]" @change="(e)=>swipeChange(i,e)">
-						<swiper-item v-for="(item, index) in h.photos" :key="`${i}-${index}`">
-							<view class="swiper-item">
-								<image :src="endpoint + '/storage/' + item.path"></image>
+			<Tinder ref="tinder" key-name="id" :queue.sync="queue" :offset-y="10" @submit="onSubmit"
+			        style="height: 75vh;margin: 0 50rpx;">
+				<template v-slot="scope">
+					<view
+						class="pic"
+						:style="{
+                            'background-image': `url()`,
+                            'background-color': `lightgray`,
+                            'width': '100%',
+							'height': '100%',
+							'background-size': 'cover',
+							'background-position': 'center',
+							'display': 'flex',
+							'flex-direction': 'column',
+							'justify-content':'flex-end',
+							'align-items': 'flex-start'
+                        }"
+					>
+						<view style="margin: 0 20rpx;display: flex;flex-direction: row;align-content: center">
+							<view>
+								<image style="background-color: black; height: 50px;width: 50px;border-radius: 50%;"
+								       :src="scope.data.profile.avatar+`?cache=${Math.random()}`"></image>
 							</view>
-						</swiper-item>
-					</swiper>
-				</uni-swiper-dot>
-				<view style="display: flex;flex-direction: row;align-content: center">
-					<view>
-						<image style="background-color: black; height: 50px;width: 50px;border-radius: 50%;"
-						       :src="h.profile.avatar+`?nocache=${Math.random()}`"></image>
-					</view>
-					<view style="margin-left: 30rpx;align-self: center">
-						<text style="text-align: left;font-size: 16pt;">
-							{{ h.name }}
-						</text>
-					</view>
-				</view>
-				<template v-slot:actions>
-					<view class="card-actions">
-						<view class="card-actions-item" style="cursor: pointer" @click="like(h.id)">
-							<uni-icons type="heart-filled" size="18" color="#999"></uni-icons>
-							<text class="card-actions-item-text">喜歡</text>
+							<view style="margin-left: 30rpx;align-self: start;">
+								<text
+									style="text-align: left;font-weight: bold;color: white;">
+									{{ scope.data.name }}
+								</text>
+							</view>
 						</view>
-						<view class="card-actions-item" style="cursor: pointer" @click="hate(h.id)">
-							<uni-icons type="closeempty" size="18" color="#999"></uni-icons>
-							<text class="card-actions-item-text">不喜歡</text>
-						</view>
+						<text style="margin: 0 20rpx;color: white;margin-bottom: 30rpx"></text>
 					</view>
 				</template>
-			</uni-card>
+			</Tinder>
+			<view class="btns">
+				<image src="@/static/buttons/hate.png" @click="btnClick('nope')"></image>
+				<image src="@/static/buttons/super.png" @click="btnClick('super')"></image>
+				<image src="@/static/buttons/like.png" @click="btnClick('like')"></image>
+			</view>
 		</view>
 	</view>
 </template>
 
 <script>
-const access_token = uni.getStorageSync('access_token')
+import Tinder from "vue-tinder";
+import request from "../common/request";
+
+const source = [
+	"AdelieBreeding_ZH-CN1750945258",
+	"BlumenwieseNRW_ZH-CN4774429225",
+	"NFLDfog_ZH-CN4846953507"
+];
+
 export default {
+	components: {
+		Tinder
+	},
 	data() {
 		return {
 			endpoint: process.env.VUE_APP_API_ENDPOINT,
 			homeInfo: [],
 			swipeCurrent: {},
 			swipeDotIndex: {},
-			cardHidden: {}
+			cardHidden: {},
+
+			queue: [],
+			offset: 0,
+			history: []
 		};
 	},
 	onLoad() {
-		if (!access_token) {
-			uni.reLaunch({
-				url: '/pages/me?action=toast&message=您尚未登入&type=error'
-			})
-		}
-		uni.request({
-			url: process.env.VUE_APP_API_ENDPOINT + '/api/relation/home',
-			header: {
-				'Authorization': `Bearer ${access_token}`,
-				'Accept': 'application/json'
-			},
-			success: (res) => {
-				if (res.statusCode !== 200) {
-					console.log(res.data.message)
-					if(res.data.message === 'Unauthenticated.'){
-						uni.removeStorageSync('access_token');
-						uni.removeStorageSync('name');
-						uni.removeStorageSync('avatar');
-						uni.reLaunch({
-							url: '/pages/me?action=toast&message=您尚未登入&type=error'
-						})
-					}
-				} else {
-					console.log(res.data)
-					res.data.data.forEach((t, i) => {
-						this.swipeCurrent[i] = 0
-						this.swipeDotIndex[i] = 0
-						this.cardHidden[i] = false;
-					})
-					this.homeInfo = res.data.data
-				}
-			},
-			fail: (res) => {
-				uni.showToast({
-					title: res,
-					icon: "error",
-					mask: true
-				})
-			}
-		})
+		this.fetchData()
 	},
 	methods: {
+		fetchData() {
+			request({
+				url: '/api/relation/home',
+				auth: true,
+				success: (res) => {
+					if (res.statusCode !== 200) {
+						console.log(res.data.message)
+					} else {
+						console.log(res.data)
+						res.data.data.forEach((t, i) => {
+							this.swipeCurrent[i] = 0
+							this.swipeDotIndex[i] = 0
+							this.cardHidden[i] = false;
+						})
+						this.homeInfo = res.data.data
+						this.queue = res.data.data
+					}
+				}
+			})
+		},
+		/**
+		 * @param type: 滑動類型（like右, nope左, super上滑）
+		 * @param key: 內容key
+		 * @param item: 目前滑過的內容
+		 * */
+		onSubmit({type, key, item}) {
+			if (this.queue.length < 3) {
+				this.fetchData();
+			}
+			this[type](item)
+		},
+
+		/**
+		 * 用戶點擊按鈕時
+		 * @param choice: 類型（like, nope, super）
+		 * */
+		async btnClick(choice) {
+			this.$refs.tinder.decide(choice);
+		},
+
+
 		swipeChange(i, e) {
 			this.$set(this.swipeCurrent, i, e.detail.current)
 			this.$forceUpdate();
@@ -104,59 +124,41 @@ export default {
 			this.$set(this.swipeDotIndex, i, e)
 			this.$forceUpdate();
 		},
-		like(user_id) {
-			uni.request({
-				url: process.env.VUE_APP_API_ENDPOINT + '/api/relation/like',
+		
+		like({ id }) {
+			request({
+				url: '/api/relation/like',
+				auth: true,
 				method: "POST",
-				header: {
-					'Authorization': `Bearer ${access_token}`,
-					'Accept': 'application/json'
-				},
 				data: {
-					user_id
+					user_id: id
 				},
 				success: (res) => {
 					if (res.statusCode !== 200) {
 						console.log(res.data.message)
 					} else {
-						this.cardHidden[user_id] = true
-						this.$forceUpdate();
+						//this.cardHidden[user_id] = true
+						//this.$forceUpdate();
 					}
-				},
-				fail: (res) => {
-					uni.showToast({
-						title: res,
-						icon: "error",
-						mask: true
-					})
 				}
 			})
 		},
-		hate(user_id) {
-			uni.request({
-				url: process.env.VUE_APP_API_ENDPOINT + '/api/relation/hate',
+		
+		nope({ id }) {
+			request({
+				url: '/api/relation/hate',
 				method: "POST",
-				header: {
-					'Authorization': `Bearer ${access_token}`,
-					'Accept': 'application/json'
-				},
+				auth: true,
 				data: {
-					user_id
+					user_id: id
 				},
 				success: (res) => {
 					if (res.statusCode !== 200) {
 						console.log(res.data.message)
 					} else {
-						this.cardHidden[user_id] = true
-						this.$forceUpdate();
+						//this.cardHidden[user_id] = true
+						//this.$forceUpdate();
 					}
-				},
-				fail: (res) => {
-					uni.showToast({
-						title: res,
-						icon: "error",
-						mask: true
-					})
 				}
 			})
 		}
@@ -211,5 +213,28 @@ export default {
 	align-items: center;
 	height: 200px;
 	color: blue;
+}
+
+.btns {
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 30px;
+	margin: auto;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 300px;
+	max-width: 355px;
+}
+
+.btns image {
+	cursor: pointer;
+	box-shadow: 4rpx 4rpx 2rpx rgba(0, 0, 0, 0.3);
+	/*border: black 1px solid;*/
+	border-radius: 50%;
+	margin: 0 20rpx;
+	width: 100rpx;
+	height: 100rpx;
 }
 </style>
