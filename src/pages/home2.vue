@@ -104,7 +104,7 @@ export default {
 			this.$set(this.swipeDotIndex, i, e)
 			this.$forceUpdate();
 		},
-		like(user_id) {
+		like(id) {
 			uni.request({
 				url: process.env.VUE_APP_API_ENDPOINT + '/api/relation/like',
 				method: "POST",
@@ -113,13 +113,13 @@ export default {
 					'Accept': 'application/json'
 				},
 				data: {
-					user_id
+					id
 				},
 				success: (res) => {
 					if (res.statusCode !== 200) {
 						console.log(res.data.message)
 					} else {
-						this.cardHidden[user_id] = true
+						this.cardHidden[id] = true
 						this.$forceUpdate();
 					}
 				},
@@ -132,7 +132,7 @@ export default {
 				}
 			})
 		},
-		hate(user_id) {
+		hate(id) {
 			uni.request({
 				url: process.env.VUE_APP_API_ENDPOINT + '/api/relation/hate',
 				method: "POST",
@@ -141,13 +141,13 @@ export default {
 					'Accept': 'application/json'
 				},
 				data: {
-					user_id
+					id
 				},
 				success: (res) => {
 					if (res.statusCode !== 200) {
 						console.log(res.data.message)
 					} else {
-						this.cardHidden[user_id] = true
+						this.cardHidden[id] = true
 						this.$forceUpdate();
 					}
 				},

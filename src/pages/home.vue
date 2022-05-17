@@ -138,13 +138,13 @@ export default {
 				auth: true,
 				method: "POST",
 				data: {
-					user_id: id
+					id: id
 				},
 				success: (res) => {
 					if (res.statusCode !== 200) {
 						console.log(res.data.message)
 					} else {
-						//this.cardHidden[user_id] = true
+						//this.cardHidden[id] = true
 						//this.$forceUpdate();
 					}
 				}
@@ -157,13 +157,13 @@ export default {
 				method: "POST",
 				auth: true,
 				data: {
-					user_id: id
+					id: id
 				},
 				success: (res) => {
 					if (res.statusCode !== 200) {
 						console.log(res.data.message)
 					} else {
-						//this.cardHidden[user_id] = true
+						//this.cardHidden[id] = true
 						//this.$forceUpdate();
 					}
 				}
