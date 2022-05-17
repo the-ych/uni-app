@@ -33,7 +33,7 @@ export default {
 			})
 		} 
 		uni.request({
-			url: process.env.VUE_APP_API_ENDPOINT + '/api/relation/be_liked',
+			url: process.env.VUE_APP_API_ENDPOINT + '/api/relationship/be_liked',
 			header: {
 				'Authorization': `Bearer ${access_token}`,
 				'Accept': 'application/json'

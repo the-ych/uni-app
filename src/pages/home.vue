@@ -16,7 +16,7 @@
 							'display': 'flex',
 							'flex-direction': 'column',
 							'justify-content':'flex-end',
-							'align-items': 'flex-start'
+							'align-items': 'flex-start' 
                         }"
 					>
 						<view style="margin: 0 20rpx;display: flex;flex-direction: row;align-content: center">
@@ -80,7 +80,7 @@ export default {
 	methods: {
 		fetchData() {
 			request({
-				url: '/api/relation/home',
+				url: '/api/relationship/home',
 				auth: true,
 				success: (res) => {
 
@@ -134,7 +134,7 @@ export default {
 		
 		like({ id }) {
 			request({
-				url: '/api/relation/like',
+				url: '/api/relationship/like',
 				auth: true,
 				method: "POST",
 				data: {
@@ -153,7 +153,7 @@ export default {
 		
 		nope({ id }) {
 			request({
-				url: '/api/relation/hate',
+				url: '/api/relationship/hate',
 				method: "POST",
 				auth: true,
 				data: {

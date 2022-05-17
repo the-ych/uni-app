@@ -60,7 +60,7 @@ export default {
 			})
 		}
 		uni.request({
-			url: process.env.VUE_APP_API_ENDPOINT + '/api/relation/home',
+			url: process.env.VUE_APP_API_ENDPOINT + '/api/relationship/home',
 			header: {
 				'Authorization': `Bearer ${access_token}`,
 				'Accept': 'application/json'
@@ -106,7 +106,7 @@ export default {
 		},
 		like(id) {
 			uni.request({
-				url: process.env.VUE_APP_API_ENDPOINT + '/api/relation/like',
+				url: process.env.VUE_APP_API_ENDPOINT + '/api/relationship/like',
 				method: "POST",
 				header: {
 					'Authorization': `Bearer ${access_token}`,
@@ -134,7 +134,7 @@ export default {
 		},
 		hate(id) {
 			uni.request({
-				url: process.env.VUE_APP_API_ENDPOINT + '/api/relation/hate',
+				url: process.env.VUE_APP_API_ENDPOINT + '/api/relationship/hate',
 				method: "POST",
 				header: {
 					'Authorization': `Bearer ${access_token}`,
