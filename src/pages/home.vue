@@ -80,7 +80,7 @@ export default {
 	methods: {
 		fetchData() {
 			request({
-				url: '/api/relationship/home',
+				url: '/api/home',
 				auth: true,
 				success: (res) => {
 
