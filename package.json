@@ -48,6 +48,7 @@
     "test:mp-weixin": "cross-env UNI_PLATFORM=mp-weixin jest -i"
   },
   "dependencies": {
+    "@babel/plugin-proposal-optional-chaining": "^7.17.12",
     "@dcloudio/uni-app-plus": "^2.0.1-34720220422002",
     "@dcloudio/uni-h5": "^2.0.1-34720220422002",
     "@dcloudio/uni-helper-json": "*",
