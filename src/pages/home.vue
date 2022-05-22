@@ -112,9 +112,9 @@ export default {
 		},
 
 		makeStyle(scope) {
-			//console.log(scope.data.photos?.[0]?.path)
+			console.log(scope.data.photos?.[0]?.path)
 			return {
-				'background-image': `url(${scope.data.photos?.[0]?.path})`,
+				'background-image': `url(${process.env.VUE_APP_API_ENDPOINT}/storage/${scope.data.photos?.[0]?.path})`,
 				'background-color': `lightgray`,
 				'width': '100%',
 				'height': '100%',
