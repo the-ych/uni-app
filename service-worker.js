@@ -14,10 +14,10 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.b97179d8778276154b9a74a9df1b5d92.js"
+  "/precache-manifest.9258f227059870bd854debd64de9f9a3.js"
 );
 
-workbox.core.setCacheNameDetails({prefix: "test-uniapp"});
+workbox.core.setCacheNameDetails({prefix: "ych-app"});
 
 self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'SKIP_WAITING') {

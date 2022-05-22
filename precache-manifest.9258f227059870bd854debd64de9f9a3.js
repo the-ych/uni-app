@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "2690f4da8211e5fdb0f88c62805e17b1",
+    "revision": "a35fd68e3d1ca32faf7491be27d1a9df",
     "url": "/index.html"
   },
   {
@@ -10,6 +10,14 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "b6d3756ee0e3dd7ecb155b751a233247",
     "url": "/static/fonts/uniicons.b6d3756e.ttf"
+  },
+  {
+    "revision": "9b2d37cbcf215fd7955017664454e06a",
+    "url": "/static/img/hate.9b2d37cb.png"
+  },
+  {
+    "revision": "5d2aae3663bb3a82931f764bf844b93c",
+    "url": "/static/img/like.5d2aae36.png"
   },
   {
     "revision": "bc25473a7133eb752cd61dca2ba23e1f",
@@ -24,6 +32,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/static/img/release.c06e8701.png"
   },
   {
+    "revision": "e4217cc92dcd4d2574dc58d1279d67cc",
+    "url": "/static/img/super.e4217cc9.png"
+  },
+  {
     "revision": "49dd60f6ab8527896ee789a67ca77250",
     "url": "/static/img/video.49dd60f6.png"
   },
@@ -32,36 +44,32 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/static/js/chunk-vendors.3ac9041a.js"
   },
   {
-    "revision": "613eb7d93c22a219fe18",
-    "url": "/static/js/index.5ec842a1.js"
+    "revision": "21eed1635972aa812714",
+    "url": "/static/js/index.f96628f3.js"
   },
   {
     "revision": "5f4f2b963523dd3fb69b",
     "url": "/static/js/pages-auth-login.586bf29b.js"
   },
   {
-    "revision": "a2fbcfbe5e0283107701",
-    "url": "/static/js/pages-auth-login~pages-auth-register.78212d5a.js"
-  },
-  {
-    "revision": "a05c50fad7383924d9de",
-    "url": "/static/js/pages-auth-login~pages-auth-register~pages-home.cf1e1c54.js"
+    "revision": "c891d1b8ae6b0be6be57",
+    "url": "/static/js/pages-auth-login~pages-auth-register.a2c532f5.js"
   },
   {
     "revision": "3333d833a0e691be388e",
     "url": "/static/js/pages-auth-register.e5e61eec.js"
   },
   {
-    "revision": "03ea563167f29962f0bf",
-    "url": "/static/js/pages-home.3dcc0f7e.js"
+    "revision": "1e101821c48c0ff2b863",
+    "url": "/static/js/pages-home.c062786e.js"
   },
   {
-    "revision": "2b1c808605d0e548c8ae",
-    "url": "/static/js/pages-me.4b566f8d.js"
+    "revision": "a744f8165c9eb426f696",
+    "url": "/static/js/pages-me.c94be868.js"
   },
   {
-    "revision": "295c364ce7cc3783cbdf",
-    "url": "/static/js/pages-relation-beLiked.42f6f3f6.js"
+    "revision": "77645bae4583e65703f9",
+    "url": "/static/js/pages-relationship-beLiked.5b299034.js"
   },
   {
     "revision": "776a8172c5a7148a3972",
