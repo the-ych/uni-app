@@ -6,18 +6,7 @@
 				<template v-slot="scope">
 					<view
 						class="pic"
-						:style="{
-                            'background-image': `url()`,
-                            'background-color': `lightgray`,
-                            'width': '100%',
-							'height': '100%',
-							'background-size': 'cover',
-							'background-position': 'center',
-							'display': 'flex',
-							'flex-direction': 'column',
-							'justify-content':'flex-end',
-							'align-items': 'flex-start' 
-                        }"
+						:style="makeStyle(scope)"
 					>
 						<view style="margin: 0 20rpx;display: flex;flex-direction: row;align-content: center">
 							<view>
@@ -122,6 +111,21 @@ export default {
 			this.$refs.tinder.decide(choice);
 		},
 
+		makeStyle(scope) {
+			//console.log(scope.data.photos?.[0]?.path)
+			return {
+				'background-image': `url(${scope.data.photos?.[0]?.path})`,
+				'background-color': `lightgray`,
+				'width': '100%',
+				'height': '100%',
+				'background-size': 'cover',
+				'background-position': 'center',
+				'display': 'flex',
+				'flex-direction': 'column',
+				'justify-content':'flex-end',
+				'align-items': 'flex-start'
+			}
+		},
 
 		swipeChange(i, e) {
 			this.$set(this.swipeCurrent, i, e.detail.current)
