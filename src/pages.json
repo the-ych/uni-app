@@ -14,8 +14,16 @@
             }
 		},
 		{
-			"path": "pages/tabbar/tabbar-3/tabbar-3",
-			"style": {}
+			"path": "pages/chat",
+			"style": {
+              "navigationBarTitleText": "聊天室"
+            }
+		},
+		{
+			"path": "pages/chatList",
+			"style": {
+              "navigationBarTitleText": "聊天列表"
+            }
 		},
 		{
 			"path": "pages/notifications",
@@ -72,10 +80,10 @@
 				"text": "首页"
 			},
 			{
-				"pagePath": "pages/relationship/beLiked",
+				"pagePath": "pages/chatList",
 				"iconPath": "static/img/tabbar/guanzhu.png",
 				"selectedIconPath": "static/img/tabbar/guanzhuactive.png",
-				"text": "誰喜歡我"
+				"text": "聊天列表"
 			},
 			//#ifdef MP-WEIXIN
 			{
