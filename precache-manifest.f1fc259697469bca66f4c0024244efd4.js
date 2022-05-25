@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "a7f528080fb1051802c3094d8b977982",
+    "revision": "c0a225c5f610ed3d4796b899fb353ab9",
     "url": "/index.html"
   },
   {
@@ -44,12 +44,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/static/js/chunk-vendors.3ac9041a.js"
   },
   {
-    "revision": "ba76438ec7b4c1a36314",
-    "url": "/static/js/index.5a8d1592.js"
+    "revision": "a018c0c86b5b6b526681",
+    "url": "/static/js/index.3914aff1.js"
   },
   {
-    "revision": "5f4f2b963523dd3fb69b",
-    "url": "/static/js/pages-auth-login.586bf29b.js"
+    "revision": "a454b4418c1b1258666e",
+    "url": "/static/js/pages-auth-login.0e7771d5.js"
   },
   {
     "revision": "c891d1b8ae6b0be6be57",
@@ -66,6 +66,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "a744f8165c9eb426f696",
     "url": "/static/js/pages-me.c94be868.js"
+  },
+  {
+    "revision": "63135060793378c2ab17",
+    "url": "/static/js/pages-notifications.5ce82914.js"
   },
   {
     "revision": "77645bae4583e65703f9",
@@ -86,9 +90,5 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "e98d265a2f63e72085ca",
     "url": "/static/js/pages-tabbar-tabbar-3-tabbar-3.cf7a2efa.js"
-  },
-  {
-    "revision": "376440c68abe9586ab0e",
-    "url": "/static/js/pages-tabbar-tabbar-4-tabbar-4.a0234712.js"
   }
 ]);
