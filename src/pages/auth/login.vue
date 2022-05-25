@@ -7,7 +7,7 @@
 					<uni-easyinput type="text" v-model="formData.email" placeholder="請輸入電子信箱"/>
 				</uni-forms-item>
 				<uni-forms-item label="密碼" name="password">
-					<uni-easyinput type="password" v-model="formData.password" placeholder="請輸入密碼"/>
+					<uni-easyinput type="password" v-model="formData.password" placeholder="請輸入密碼" @confirm="submit"/>
 				</uni-forms-item>
 				<button @click="submit">登入 / 註冊</button>
 			</uni-forms>
