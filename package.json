@@ -70,6 +70,7 @@
     "@vue/shared": "^3.0.0",
     "core-js": "^3.6.5",
     "flyio": "^0.6.2",
+    "moment": "^2.29.3",
     "regenerator-runtime": "^0.12.1",
     "register-service-worker": "^1.7.1",
     "vue": "^2.6.11",
