@@ -61,10 +61,6 @@
 import dateTime from '../common/dateTime.js';
 import submit from '../components/submit.vue';
 
-
-//音频播放
-const innerAudioContext = uni.createInnerAudioContext();
-
 export default {
 	data() {
 		return {
