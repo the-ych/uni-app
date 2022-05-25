@@ -146,7 +146,7 @@ export default {
 				success: (res) => {
 					if (res.statusCode === 200) {
 						uni.setStorageSync('access_token', res.data.access_token)
-						uni.setStorageSync('name', name)
+						uni.setStorageSync('user', res.data.data)
 
 						let image_uploaded = 0
 						const image_length = this.images.length

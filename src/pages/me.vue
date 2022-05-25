@@ -84,13 +84,14 @@ export default {
 		}
 
 		try {
+			const user = JSON.parse(uni.getStorageSync('user'))
 			const value = uni.getStorageSync('access_token');
 
-			const avatar = uni.getStorageSync('avatar');
+			const avatar = user.profile.avatar;
 			if (value) {
 				// 已登入
 				this.logined = true
-				this.name = uni.getStorageSync('name')
+				this.name = user.name
 			}
 
 			if(avatar){
@@ -121,8 +122,7 @@ export default {
 				},
 				success(res) {
 					uni.removeStorageSync('access_token');
-					uni.removeStorageSync('name');
-					uni.removeStorageSync('avatar');
+					uni.removeStorageSync('user');
 					uni.reLaunch({
 						url: '/pages/me?action=toast&message=登出成功'
 					});

@@ -70,8 +70,7 @@ export default {
 					console.log(res.data.message)
 					if(res.data.message === 'Unauthenticated.'){
 						uni.removeStorageSync('access_token');
-						uni.removeStorageSync('name');
-						uni.removeStorageSync('avatar');
+						uni.removeStorageSync('user');
 						uni.reLaunch({
 							url: '/pages/me?action=toast&message=您尚未登入&type=error'
 						})
