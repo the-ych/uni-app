@@ -3,14 +3,14 @@
 		<template v-for="chat in chats">
 			<uni-list-item
 				:key="chat.id"
-				:title="getRoomName(chat.conversation.participants)"
+				:title="getFriend(chat.conversation.participants).name"
 				:note="chat.conversation.last_message || '尚無訊息'"
 				showArrow
-				:thumb="getAvatar(chat.conversation.participants)"
+				:thumb="getFriend(chat.conversation.participants).avatar"
 				thumb-size="lg"
 				thumb-style="border-radius: 50%;"
 				:rightText="moment(chat.updated_at).fromNow()"
-				@click="goto(chat.conversation_id)"
+				@click="goto(chat)"
 			/>
 		</template>
 	</uni-list>
@@ -40,10 +40,12 @@ export default {
 					updated_at: '十分鐘前'
 				}*/
 			],
-			options: []
+			options: [],
+			me: {}
 		}
 	},
 	onLoad() {
+		this.me = JSON.parse(uni.getStorageSync('user'))
 		this.fetch()
 	},
 	methods: {
@@ -61,15 +63,13 @@ export default {
 				}
 			})
 		},
-		getRoomName(participants) {
-			return participants.filter(x => x.messageable.id !== JSON.parse(uni.getStorageSync('user')).id)[0].messageable.name
+		getFriend(participants) {
+			return participants.filter(x => x.messageable.id !== this.me.id)[0].messageable
 		},
-		getAvatar(participants) {
-			return participants.filter(x => x.messageable.id !== JSON.parse(uni.getStorageSync('user')).id)[0].messageable.avatar
-		},
-		goto(id){
+		goto(chat){
+			const friend = this.getFriend(chat.conversation.participants)
 			uni.navigateTo({
-				url: `/pages/chat?id=${id}`
+				url: `/pages/chat?id=${chat.conversation_id}&friend=${JSON.stringify(friend)}`
 			})
 		},
 		moment

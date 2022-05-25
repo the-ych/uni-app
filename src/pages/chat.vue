@@ -6,55 +6,45 @@
 		<scroll-view class="chat" scroll-y="true" scroll-with-animation="true" :scroll-into-view="scrollToView">
 			<view class="chat-main" :style="{paddingBottom:inputh+'px'}">
 				<view class="chat-ls" v-for="(item,index) in unshiftmsg" :key="index" :id="'msg'+ index">
-					<view class="chat-time" v-if="item.createTime != ''">{{changeTime(item.createTime)}}</view>
-					<view class="msg-m msg-left" v-if="item.sendName ==  friendName">
+					<view class="chat-time" v-if="item.createTime !== ''">{{ changeTime(item.createTime) }}</view>
+
+					<!-- 對方傳的訊息 -->
+					<view class="msg-m msg-left" v-if="item.sendName ===  friend.name">
 						<image class="user-img" src=""></image>
-						<view class="message" v-if="item.TextType == 0">
+						<view class="message" v-if="item.TextType === 0">
 							<!-- 文字 -->
-							<view class="msg-text">{{item.sendText}}</view>
+							<view class="msg-text">{{ item.sendText }}</view>
 						</view>
-						<view class="message" v-if="item.TextType == 1" @tap="previewImg(item.sendText)">
+						<view class="message" v-if="item.TextType === 1" @tap="previewImg(item.sendText)">
 							<!-- 图像 -->
 							<image :src="item.sendText" class="msg-img" mode="widthFix"></image>
 						</view>
-						<view class="message" v-if="item.TextType == 2" @tap="playVoice(item.sendText.voice)">
-							<!-- 音频 -->
-							<view class="msg-text voice" :style="{width:item.sendText.time*4+'rpx'}">
-								<image src="" class="voice-img"></image>
-								{{item.sendText.time}}″
-							</view>
-						</view>
-						<view class="message" v-if="item.TextType == 3" @tap="openLocation(item.sendText)">
+						<view class="message" v-if="item.TextType === 3" @tap="openLocation(item.sendText)">
 							<!-- 位置 -->
 							<view class="msg-map">
-								<view class="map-name">{{item.sendText.name}}</view>
-								<view class="map-address">{{item.sendText.address}}</view>
+								<view class="map-name">{{ item.sendText.name }}</view>
+								<view class="map-address">{{ item.sendText.address }}</view>
 								<!-- 如果map不起作用，就可以直接用一张图片去替代 -->
 								<map class="map" :longitude="item.sendText.longitude" :latitude="item.sendText.latitude"
 								     :markers="covers(item.sendText)"></map>
 							</view>
 						</view>
 					</view>
-					<view class="msg-m msg-right" v-if="item.sendName != friendName">
+
+					<!-- 自己傳的訊息 -->
+					<view class="msg-m msg-right" v-if="item.sendName !== friend.name">
 						<image class="user-img" src=""></image>
-						<view class="message" v-if="item.TextType == 0">
-							<view class="msg-text">{{item.sendText}}</view>
+						<view class="message" v-if="item.TextType === 0">
+							<view class="msg-text">{{ item.sendText }}</view>
 						</view>
-						<view class="message" v-if="item.TextType == 1" @tap="previewImg(item.sendText)">
+						<view class="message" v-if="item.TextType === 1" @tap="previewImg(item.sendText)">
 							<image :src="item.sendText" class="msg-img" mode="widthFix"></image>
 						</view>
-						<view class="message" v-if="item.TextType == 2" @tap="playVoice(item.sendText.voice)">
-							<!-- 音频 -->
-							<view class="msg-text voice" :style="{width:item.sendText.time*4+'rpx'}">
-								{{item.sendText.time}}″
-								<image src="" class="voice-img"></image>
-							</view>
-						</view>
-						<view class="message" v-if="item.TextType == 3" @tap="openLocation(item.sendText)">
+						<view class="message" v-if="item.TextType === 3" @tap="openLocation(item.sendText)">
 							<!-- 位置 -->
 							<view class="msg-map">
-								<view class="map-name">{{item.sendText.name}}</view>
-								<view class="map-address">{{item.sendText.address}}</view>
+								<view class="map-name">{{ item.sendText.name }}</view>
+								<view class="map-address">{{ item.sendText.address }}</view>
 								<map class="map" :longitude="item.sendText.longitude" :latitude="item.sendText.latitude"
 								     :markers="covers(item.sendText)"></map>
 							</view>
@@ -78,114 +68,10 @@ const innerAudioContext = uni.createInnerAudioContext();
 export default {
 	data() {
 		return {
-			friendName: "xpq",
-			msg: [{
-				"sendName": "xpq",
-				"receviceName": "゛时光い",
-				"sendText": {
-					"address": "湖南省岳阳市湘阴县新世纪大道",
-					"latitude": 28.68925,
-					"longitude": 112.90917,
-					"name": "湘阴县政府(新世纪大道北)",
-				},
-				"createTime": "2022-01-06 12:40:12",
-				"updateTime": null,
-				"chatmState": 1,
-				"TextType": 3
-			}, {
-				"sendName": "゛时光い",
-				"receviceName": "xpq",
-				"sendText": {
-					"voice": "时光匆匆流过",
-					"time": 2 //秒
-				},
-				"createTime": "2022-01-06 12:22:12",
-				"updateTime": null,
-				"chatmState": 1,
-				"TextType": 2
-			}, {
-				"sendName": "xpq",
-				"receviceName": "゛时光い",
-				"sendText": {
-					"voice": "谢谢你",
-					"time": 60 //秒
-				},
-				"createTime": "2022-01-06 12:00:12",
-				"updateTime": null,
-				"chatmState": 1,
-				"TextType": 2
-			}, {
-				"sendName": "゛时光い",
-				"receviceName": "xpq",
-				"sendText": "这是第九条未读消息",
-				"createTime": "2022-01-03 12:22:12",
-				"updateTime": null,
-				"chatmState": 1,
-				"TextType": 0
-			},
-				{
-					"sendName": "゛时光い",
-					"receviceName": "xpq",
-					"sendText": "这是第八条未读消息",
-					"createTime": "2022-01-02 12:22:07",
-					"updateTime": null,
-					"chatmState": 1,
-					"TextType": 0
-				},
-				{
-					"sendName": "xpq",
-					"receviceName": "xpq",
-					"sendText": "这是第七条未读消息",
-					"createTime": "2021-12-19 12:22:03",
-					"updateTime": null,
-					"chatmState": 1,
-					"TextType": 0
-				},
-				{
-					"sendName": "゛时光い",
-					"receviceName": "xpq",
-					"sendText": "这是第六条未读消息",
-					"createTime": "2021-12-19 12:21:58",
-					"updateTime": null,
-					"chatmState": 1,
-					"TextType": 0
-				},
-				{
-					"sendName": "゛时光い",
-					"receviceName": "xpq",
-					"sendText": "http://demo.rageframe.com/attachment/images/2021/11/18/image_1637224530_diIlZlmm.jpeg",
-					"createTime": "2021-12-19 12:21:54",
-					"updateTime": null,
-					"chatmState": 1,
-					"TextType": 1
-				},
-				{
-					"sendName": "xpq",
-					"receviceName": "゛时光い",
-					"sendText": "http://demo2.rageframe.com/attachment/images/2021/09/01/image_1630483477_N03W37zs.jpg",
-					"createTime": "2021-12-19 12:21:48",
-					"updateTime": null,
-					"chatmState": 1,
-					"TextType": 1
-				},
-				{
-					"sendName": "゛时光い",
-					"receviceName": "xpq",
-					"sendText": "这是第三条未读消息",
-					"createTime": "2021-12-19 12:21:42",
-					"updateTime": null,
-					"chatmState": 1,
-					"TextType": 0
-				},
-				{
-					"sendName": "゛时光い",
-					"receviceName": "xpq",
-					"sendText": "这是第二条未读消息",
-					"createTime": "2021-12-19 12:21:33",
-					"updateTime": null,
-					"chatmState": 1,
-					"TextType": 0
-				},
+			id: 0,
+			friend: {},
+			me: {},
+			msg: [
 				{
 					"sendName": "゛时光い",
 					"receviceName": "xpq",
@@ -225,15 +111,24 @@ export default {
 				this.msg[i].createTime = t;
 			}
 			// 获取图片，为下面的预览做准备
-			if (this.msg[i].TextType == 1) {
+			if (this.msg[i].TextType === 1) {
 				this.imgMsg.unshift(this.msg[i].sendText)
 			}
 			this.unshiftmsg.unshift(this.msg[i]);
 		}
 		// 跳转到最后一条数据 与前面的:id进行对照
-		this.$nextTick(function() {
+		this.$nextTick(function () {
 			this.scrollToView = 'msg' + (this.unshiftmsg.length - 1)
 		})
+	},
+	onLoad(options) {
+		this.id = options.id
+		this.friend = JSON.parse(options.friend)
+		this.me = JSON.parse(uni.getStorageSync('user'))
+
+		uni.setNavigationBarTitle({
+			title: this.friend.name
+		});
 	},
 	components: {
 		submit,
@@ -246,7 +141,7 @@ export default {
 		previewImg(e) {
 			let index = 0;
 			for (let i = 0; i < this.imgMsg.length; i++) {
-				if (this.imgMsg[i] == e) {
+				if (this.imgMsg[i] === e) {
 					index = i;
 				}
 			}
@@ -257,20 +152,13 @@ export default {
 				urls: this.imgMsg,
 				longPressActions: {
 					itemList: ['发送给朋友', '保存图片', '收藏'],
-					success: function(data) {
+					success: function (data) {
 						console.log('选中了第' + (data.tapIndex + 1) + '个按钮,第' + (data.index + 1) + '张图片');
 					},
-					fail: function(err) {
+					fail: function (err) {
 						console.log(err.errMsg);
 					}
 				}
-			});
-		},
-		//音频播放
-		playVoice(e) {
-			innerAudioContext.src = e;
-			innerAudioContext.onPlay(() => {
-				console.log('开始播放');
 			});
 		},
 		//地图定位
@@ -289,7 +177,7 @@ export default {
 				longitude: e.longitude,
 				name: e.name,
 				address: e.address,
-				success: function() {
+				success: function () {
 					console.log('success');
 				}
 			});
@@ -311,10 +199,10 @@ export default {
 
 			this.unshiftmsg.push(data);
 			// 跳转到最后一条数据 与前面的:id进行对照
-			this.$nextTick(function() {
+			this.$nextTick(function () {
 				this.scrollToView = 'msg' + (this.unshiftmsg.length - 1)
 			})
-			if (e.type == 1) {
+			if (e.type === 1) {
 				this.imgMsg.push(e.message);
 			}
 			console.log(e)
@@ -328,7 +216,7 @@ export default {
 		// 滚动到底部
 		goBottom() {
 			this.scrollToView = '';
-			this.$nextTick(function() {
+			this.$nextTick(function () {
 				this.scrollToView = 'msg' + (this.unshiftmsg.length - 1)
 			})
 		}
@@ -348,7 +236,7 @@ page {
 	left: 0;
 	right: 0;
 	height: calc(0.5 * 125rpx);
-	line-height: calc(0.5 *100rpx);
+	line-height: calc(0.5 * 100rpx);
 	background: #fff;
 }
 
