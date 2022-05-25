@@ -6,8 +6,9 @@
 				:title="getRoomName(chat.conversation.participants)"
 				:note="chat.conversation.last_message || '尚無訊息'"
 				showArrow
-				thumb="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/460d46d0-4fcc-11eb-8ff1-d5dcf8779628.png"
+				:thumb="getAvatar(chat.conversation.participants)"
 				thumb-size="lg"
+				thumb-style="border-radius: 50%;"
 				:rightText="moment(chat.updated_at).fromNow()"
 			/>
 		</template>
@@ -62,6 +63,9 @@ export default {
 		getRoomName(participants) {
 			return participants.filter(x => x.messageable.id !== JSON.parse(uni.getStorageSync('user')).id)[0].messageable.name
 		},
+		getAvatar(participants) {
+			return participants.filter(x => x.messageable.id !== JSON.parse(uni.getStorageSync('user')).id)[0].messageable.avatar
+		},
 		moment
 	},
 	components: {UniList, UniListItem}
@@ -69,9 +73,4 @@ export default {
 </script>
 
 <style scoped>
-
-.chat-custom-text {
-	font-size: 24rpx;
-	color: #999;
-}
 </style>
