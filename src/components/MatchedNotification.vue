@@ -1,5 +1,5 @@
 <template>
-	<view class="container">
+	<view class="container" @click="click">
 		<view class="read">
 			<text v-if="this.notification.read_at === null">●</text>
 		</view>
@@ -24,6 +24,7 @@
 import moment from 'moment';
 
 import 'moment/locale/zh-tw';
+import request from "../common/request";
 
 moment.locale('zh-tw');
 
@@ -35,7 +36,27 @@ export default {
 			time: moment(this.notification.created_at).fromNow()
 		}
 	},
-	methods: {}
+	methods: {
+		click() {
+			request({
+				url: '/api/notifications/read',
+				method: 'POST',
+				auth: true,
+				data: {
+					id: this.notification.id
+				},
+				success(res) {
+					if (res.statusCode !== 200) {
+						console.log(res.data.message)
+					} else {
+						uni.reLaunch({
+							url: '/pages/notifications'
+						})
+					}
+				}
+			})
+		}
+	}
 }
 </script>
 
