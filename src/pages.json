@@ -19,7 +19,9 @@
 		},
 		{
 			"path": "pages/notifications",
-			"style": {}
+			"style": {
+              "navigationBarTitleText": "通知"
+            }
 		},
 		{
 			"path": "pages/me",
@@ -94,7 +96,7 @@
 				"pagePath": "pages/notifications",
 				"iconPath": "static/img/tabbar/news.png",
 				"selectedIconPath": "static/img/tabbar/newsactive.png",
-				"text": "消息"
+				"text": "通知"
 			},
 			{
 				"pagePath": "pages/me",
