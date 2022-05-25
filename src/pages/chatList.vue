@@ -10,6 +10,7 @@
 				thumb-size="lg"
 				thumb-style="border-radius: 50%;"
 				:rightText="moment(chat.updated_at).fromNow()"
+				@click="goto(chat.conversation_id)"
 			/>
 		</template>
 	</uni-list>
@@ -65,6 +66,11 @@ export default {
 		},
 		getAvatar(participants) {
 			return participants.filter(x => x.messageable.id !== JSON.parse(uni.getStorageSync('user')).id)[0].messageable.avatar
+		},
+		goto(id){
+			uni.navigateTo({
+				url: `/pages/chat?id=${id}`
+			})
 		},
 		moment
 	},
