@@ -80,7 +80,7 @@ export default {
 				{
 					"sendName": "゛时光い",
 					"receviceName": "xpq",
-					"sendText": "爱你啊",
+					"sendText": "測試訊息",
 					"createTime": "2021-12-18 20:37:03",
 					"updateTime": null,
 					"chatmState": 0,
