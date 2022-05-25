@@ -10,7 +10,7 @@
 
 					<!-- 對方傳的訊息 -->
 					<view class="msg-m msg-left" v-if="item.sendName ===  friend.name">
-						<image class="user-img" src=""></image>
+						<image class="user-img" :src="friend.avatar"></image>
 						<view class="message" v-if="item.TextType === 0">
 							<!-- 文字 -->
 							<view class="msg-text">{{ item.sendText }}</view>
@@ -33,7 +33,7 @@
 
 					<!-- 自己傳的訊息 -->
 					<view class="msg-m msg-right" v-if="item.sendName !== friend.name">
-						<image class="user-img" src=""></image>
+						<image class="user-img" :src="me.avatar"></image>
 						<view class="message" v-if="item.TextType === 0">
 							<view class="msg-text">{{ item.sendText }}</view>
 						</view>

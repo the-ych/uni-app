@@ -2,7 +2,7 @@
 	<view>
 		<view class="submit">
 			<view class="submit-chat">
-				<textarea auto-height="true" class="chat-send btn" :class="{displaynone:isrecord}" @input="inputs"
+				<textarea auto-height="true" class="chat-send btn" @input="inputs"
 				          @focus="focus" v-model="msg"></textarea>
 				<view class="bt-img">
 					<uni-icons type="paperplane-filled" size="50"></uni-icons>
@@ -76,7 +76,6 @@ export default {
 			setTimeout(() => {
 				this.getElementHeight();
 			}, 10)
-			this.isrecord = !this.isrecord;
 		},
 		//文字发送
 		inputs(e) {
@@ -108,7 +107,6 @@ export default {
 		more() {
 			this.ismore = !this.ismore;
 			//切换的时候关闭其他界面
-			this.isrecord = false;
 			//this.toc = require("");
 			setTimeout(() => {
 				this.getElementHeight();
