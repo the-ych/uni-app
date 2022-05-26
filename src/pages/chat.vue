@@ -5,11 +5,11 @@
 		<!-- 聊天内容 -->
 		<scroll-view class="chat" scroll-y="true" scroll-with-animation="true" :scroll-into-view="scrollToView">
 			<view class="chat-main" :style="{paddingBottom:inputh+'px'}">
-				<view class="chat-ls" v-for="(item,index) in unshiftmsg" :key="index" :id="'msg'+ index">
+				<view class="chat-ls" v-for="(item,index) in msg" :key="index" :id="'msg'+ index">
 					<view class="chat-time" v-if="item.created_at !== ''">{{ changeTime(item.created_at) }}</view>
 
 					<!-- 對方傳的訊息 -->
-					<view class="msg-m msg-left" v-if="item.sender.id === friend.id">
+					<view class="msg-m msg-left" v-if="!item.is_sender">
 						<image class="user-img" :src="friend.avatar"/>
 
 						<!-- 文字 -->
@@ -34,7 +34,7 @@
 					</view>
 
 					<!-- 自己傳的訊息 -->
-					<view class="msg-m msg-right" v-if="item.sender.id === me.id">
+					<view class="msg-m msg-right" v-if="item.is_sender">
 						<image class="user-img" :src="me.avatar"></image>
 						
 						<view class="message" v-if="item.type === 'text'">
@@ -74,28 +74,7 @@ export default {
 			id: 0,
 			friend: {},
 			me: {},
-			msg: [
-				{
-					"sendName": "゛时光い",
-					"receviceName": "xpq",
-					"sendText": "http://demo2.rageframe.com/attachment/images/2021/09/01/image_1630483477_N03W37zs.jpg",
-					"createTime": "2021-12-19 11:02:18",
-					"updateTime": null,
-					"chatmState": 1,
-					"TextType": 1
-				},
-				{
-					"sendName": "゛时光い",
-					"receviceName": "xpq",
-					"sendText": "測試訊息",
-					"createTime": "2021-12-18 20:37:03",
-					"updateTime": null,
-					"chatmState": 0,
-					"TextType": 0
-				}
-			],
-			// 反转数据接收
-			unshiftmsg: [],
+			msg: [],
 			imgMsg: [],
 			scrollToView: '',
 			oldTime: new Date(),
@@ -103,7 +82,6 @@ export default {
 		}
 	},
 	onShow() {
-		// 数组倒叙 主要是应对后端传过来的数据
 		for (var i = 0; i < this.msg.length; i++) {
 			//时间间隔处理
 			if (i < this.msg.length - 1) { //这里表示头部时间还是显示一下
@@ -121,7 +99,7 @@ export default {
 		}
 		// 跳转到最后一条数据 与前面的:id进行对照
 		this.$nextTick(function () {
-			this.scrollToView = 'msg' + (this.unshiftmsg.length - 1)
+			this.scrollToView = 'msg' + (this.msg.length - 1)
 		})
 	},
 	onLoad(options) {
@@ -149,7 +127,7 @@ export default {
 						console.log(res.data.message)
 					} else {
 						console.log(res.data.data)
-						that.unshiftmsg = res.data.data
+						that.msg = res.data.data
 					}
 				}
 			})
@@ -222,25 +200,23 @@ export default {
 		},
 		//接受输入内容
 		inputs(e) {
-			//时间间隔处理
 			let data = {
-				"sendName": "゛时光い",
-				"receviceName": "xpq",
-				"sendText": e.message,
-				"createTime": new Date(),
-				"updateTime": new Date(),
-				"chatmState": 1,
-				"TextType": e.type
+				"is_sender": 1,
+				"id": 1,
+				"body": "test",
+				"type": "text",
+				"data": [],
+				"created_at": new Date().toISOString(),
+				"sender": this.me
 			};
 
 			this.sendMessage(e.message)
 
-			this.unshiftmsg.push(data);
-			// 跳转到最后一条数据 与前面的:id进行对照
+			this.msg.push(data);
 			this.$nextTick(function () {
-				this.scrollToView = 'msg' + (this.unshiftmsg.length - 1)
+				this.scrollToView = 'msg' + (this.msg.length - 1)
 			})
-			if (e.type === 1) {
+			if (e.type === 'image') {
 				this.imgMsg.push(e.message);
 			}
 			console.log(e)
@@ -255,7 +231,7 @@ export default {
 		goBottom() {
 			this.scrollToView = '';
 			this.$nextTick(function () {
-				this.scrollToView = 'msg' + (this.unshiftmsg.length - 1)
+				this.scrollToView = 'msg' + (this.msg.length - 1)
 			})
 		}
 	}

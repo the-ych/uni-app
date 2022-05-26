@@ -2,13 +2,17 @@
 	<view>
 		<view class="submit">
 			<view class="submit-chat">
-				<textarea auto-height="true" class="chat-send btn" @input="inputs"
-				          @focus="focus" v-model="msg"></textarea>
-				<view class="bt-img">
-					<uni-icons type="paperplane-filled" size="50"></uni-icons>
-				</view>
 				<view class="bt-img" @tap="more">
-					<uni-icons type="more" size="50"></uni-icons>
+					<uni-icons :type="btnMoreIcon" size="50"></uni-icons>
+				</view>
+				<textarea
+					auto-height
+					class="chat-send btn"
+					@focus="focus"
+					v-model="msg"
+				></textarea>
+				<view class="bt-img" @tap="sendText">
+					<uni-icons type="paperplane-filled" size="50"></uni-icons>
 				</view>
 			</view>
 			<!-- 更多 -->
@@ -41,6 +45,7 @@
 <script>
 // 引入组件
 import UniIcons from "../uni_modules/uni-icons/components/uni-icons/uni-icons";
+import UniEasyinput from "../uni_modules/uni-easyinput/components/uni-easyinput/uni-easyinput";
 // 录音
 const recorderManager = uni.getRecorderManager();
 
@@ -53,14 +58,19 @@ export default {
 			msg: "",
 			// 直接引用地址可能出不来，需要用require
 			//toc: require('../../static/icon/allorder.png'),
-			timer: '', //计时器
-			vlength: 0
+			timer: '',
+			vlength: 0,
+			btnMoreIcon: 'plus'
 		};
 	},
 	components: {
+		UniEasyinput,
 		UniIcons,
 	},
 	methods: {
+		sendText() {
+			this.send(this.msg, 'text')
+		},
 		//获取高度方法
 		getElementHeight() {
 			const query = uni.createSelectorQuery().in(this);
@@ -77,28 +87,11 @@ export default {
 				this.getElementHeight();
 			}, 10)
 		},
-		//文字发送
-		inputs(e) {
-			var chatm = e.detail.value;
-			var pos = chatm.indexOf('\n');
-
-			if (pos !== -1 && chatm.length > 1) {
-				this.$emit('inputs', this.msg);
-				setTimeout(() => {
-					this.msg = '';
-				}, 0)
-			}
-
-			if (pos !== -1 && chatm.length > 1) {
-				// 0为表情和文字
-				this.send(this.msg, 0)
-			}
-
-		},
 		// 输入框聚焦
 		focus() {
 			//关闭其他项
 			this.ismore = false;
+			this.btnMoreIcon = 'plus'
 			setTimeout(() => {
 				this.getElementHeight()
 			}, 10)
@@ -106,6 +99,7 @@ export default {
 		//更多功能
 		more() {
 			this.ismore = !this.ismore;
+			this.btnMoreIcon = this.btnMoreIcon === 'minus' ? 'plus' : 'minus'
 			//切换的时候关闭其他界面
 			//this.toc = require("");
 			setTimeout(() => {
@@ -219,6 +213,7 @@ export default {
 		color: rgba(39, 40, 50, 0.6);
 	}
 }
+
 .more {
 	width: 100%;
 	height: 436rpx;
