@@ -318,6 +318,7 @@
 	.uni-list-item__extra-text {
 		color: $uni-text-color-grey;
 		font-size: $uni-font-size-sm;
+		margin-right: 10rpx;
 	}
 	.line {
 		/* #ifndef APP-NVUE */
