@@ -170,6 +170,7 @@
 
 	$bage-size: 12px;
 	$bage-small: scale(0.8);
+	$bage-large: scale(1.5);
 
 	.uni-badge--x {
 		/* #ifdef APP-NVUE */
@@ -187,6 +188,11 @@
 
 	.uni-badge--small {
 		transform: $bage-small;
+		transform-origin: center center;
+	}
+
+	.uni-badge--large {
+		transform: $bage-large;
 		transform-origin: center center;
 	}
 
