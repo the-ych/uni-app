@@ -65,7 +65,7 @@
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
 		"navigationBarTitleText": "YCH",
-		"navigationBarBackgroundColor": "#0faeff",
+		"navigationBarBackgroundColor": "#F7B3CD",
 		"backgroundColor": "#FBF9FE"
 	},
 	"tabBar": {
