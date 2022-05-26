@@ -1371,6 +1371,13 @@
   dependencies:
     "@hapi/hoek" "^8.3.0"
 
+"@hyoga/uni-socket.io@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@hyoga/uni-socket.io/-/uni-socket.io-1.0.1.tgz#e66b76cdf635a5789c39d12fe7c7bd7734163be7"
+  integrity sha512-+a3PvweyFHx39IJfJWoO9wYsvv50XCIslJ23OiOs8/jMdCZud7c4uWoZF5gH2iskcX72JcDm1Gk5g5o8X7dxEg==
+  dependencies:
+    socket.io-client "^2.1.1"
+
 "@intervolga/optimize-cssnano-plugin@^1.0.5":
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/@intervolga/optimize-cssnano-plugin/-/optimize-cssnano-plugin-1.0.6.tgz#be7c7846128b88f6a9b1d1261a0ad06eb5c0fdf8"
@@ -6993,6 +7000,13 @@ koa@^2.7.0:
     type-is "^1.6.16"
     vary "^1.1.2"
 
+laravel-echo-uni@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/laravel-echo-uni/-/laravel-echo-uni-1.0.0.tgz#0e9f6da8883ee95027f7d02713aa265a8b69761a"
+  integrity sha512-F7oZ17yNXqdVZC+5qGiflXR9rfEkeHq3Ah6c/vRKy1ROHJb/erE5nhNMNarZ0CwPcQ+e3+z32HVQMSiBvLBfNw==
+  dependencies:
+    "@hyoga/uni-socket.io" "^1.0.1"
+
 launch-editor-middleware@^2.2.1:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/launch-editor-middleware/-/launch-editor-middleware-2.3.0.tgz#edd0ed45a46f5f1cf27540f93346b5de9e8c3be0"
@@ -8794,6 +8808,13 @@ punycode@^2.1.0, punycode@^2.1.1:
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
   integrity sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==
 
+pusher-js@^7.1.0-beta:
+  version "7.1.0-beta"
+  resolved "https://registry.yarnpkg.com/pusher-js/-/pusher-js-7.1.0-beta.tgz#288ced24eef1e2c67606883f141d32ad860f6b56"
+  integrity sha512-vs9R5Guy2VW1O3nI0OTa9NQWHkfbEvmkyWDOC469WubhVFwQ5Pa38OgRQetQzA5Ege2SF3iErZBGzY/xXNiKyw==
+  dependencies:
+    tweetnacl "^1.0.3"
+
 q@^1.1.2:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/q/-/q-1.5.1.tgz#7e32f75b41381291d04611f1bf14109ac00651d7"
@@ -9607,7 +9628,7 @@ socket.io-adapter@~1.1.0:
   resolved "https://registry.yarnpkg.com/socket.io-adapter/-/socket.io-adapter-1.1.2.tgz#ab3f0d6f66b8fc7fca3959ab5991f82221789be9"
   integrity sha512-WzZRUj1kUjrTIrUKpZLEzFZ1OLj5FwLlAFQs9kuZJzJi5DKdU7FsWc36SNmA8iDOtwBQyT8FkrriRM8vXLYz8g==
 
-socket.io-client@2.4.0:
+socket.io-client@2.4.0, socket.io-client@^2.1.1:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/socket.io-client/-/socket.io-client-2.4.0.tgz#aafb5d594a3c55a34355562fc8aea22ed9119a35"
   integrity sha512-M6xhnKQHuuZd4Ba9vltCLT9oa+YvTsP8j9NcEiLElfIg8KeYPyhWOes6x4t+LTAC8enQbE/995AdTem2uNyKKQ==
@@ -10323,6 +10344,11 @@ tweetnacl@^0.14.3, tweetnacl@~0.14.0:
   version "0.14.5"
   resolved "https://registry.yarnpkg.com/tweetnacl/-/tweetnacl-0.14.5.tgz#5ae68177f192d4456269d108afa93ff8743f4f64"
   integrity sha1-WuaBd/GS1EViadEIr6k/+HQ/T2Q=
+
+tweetnacl@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/tweetnacl/-/tweetnacl-1.0.3.tgz#ac0af71680458d8a6378d0d0d050ab1407d35596"
+  integrity sha512-6rt+RN7aOi1nGMyC4Xa5DdYiukl2UWCbcJft7YhxReBGQD7OAM8Pbxw6YMo4r2diNEA8FEmu32YOn9rhaiE5yw==
 
 type-check@~0.3.2:
   version "0.3.2"

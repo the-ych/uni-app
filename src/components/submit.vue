@@ -209,7 +209,7 @@ export default {
 	}
 
 	.chat-send {
-		line-height: 44rpx;
+		line-height: 20rpx;
 	}
 
 	.record {

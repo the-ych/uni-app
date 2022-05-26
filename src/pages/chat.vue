@@ -6,49 +6,54 @@
 		<scroll-view class="chat" scroll-y="true" scroll-with-animation="true" :scroll-into-view="scrollToView">
 			<view class="chat-main" :style="{paddingBottom:inputh+'px'}">
 				<view class="chat-ls" v-for="(item,index) in unshiftmsg" :key="index" :id="'msg'+ index">
-					<view class="chat-time" v-if="item.createTime !== ''">{{ changeTime(item.createTime) }}</view>
+					<view class="chat-time" v-if="item.created_at !== ''">{{ changeTime(item.created_at) }}</view>
 
 					<!-- 對方傳的訊息 -->
-					<view class="msg-m msg-left" v-if="item.sendName ===  friend.name">
-						<image class="user-img" :src="friend.avatar"></image>
-						<view class="message" v-if="item.TextType === 0">
-							<!-- 文字 -->
-							<view class="msg-text">{{ item.sendText }}</view>
+					<view class="msg-m msg-left" v-if="item.sender.id === friend.id">
+						<image class="user-img" :src="friend.avatar"/>
+
+						<!-- 文字 -->
+						<view class="message" v-if="item.type === 'text'">
+							<view class="msg-text">{{ item.body }}</view>
 						</view>
-						<view class="message" v-if="item.TextType === 1" @tap="previewImg(item.sendText)">
-							<!-- 图像 -->
+
+						<!--
+						<view class="message" v-if="item.TextType === 1" @tap="previewImg(item.body)">
 							<image :src="item.sendText" class="msg-img" mode="widthFix"></image>
 						</view>
-						<view class="message" v-if="item.TextType === 3" @tap="openLocation(item.sendText)">
-							<!-- 位置 -->
+						
+						<view class="message" v-if="item.TextType === 3" @tap="openLocation(item.body)">
 							<view class="msg-map">
 								<view class="map-name">{{ item.sendText.name }}</view>
 								<view class="map-address">{{ item.sendText.address }}</view>
-								<!-- 如果map不起作用，就可以直接用一张图片去替代 -->
+
 								<map class="map" :longitude="item.sendText.longitude" :latitude="item.sendText.latitude"
 								     :markers="covers(item.sendText)"></map>
 							</view>
-						</view>
+						</view> -->
 					</view>
 
 					<!-- 自己傳的訊息 -->
-					<view class="msg-m msg-right" v-if="item.sendName !== friend.name">
+					<view class="msg-m msg-right" v-if="item.sender.id === me.id">
 						<image class="user-img" :src="me.avatar"></image>
-						<view class="message" v-if="item.TextType === 0">
-							<view class="msg-text">{{ item.sendText }}</view>
+						
+						<view class="message" v-if="item.type === 'text'">
+							<view class="msg-text">{{ item.body }}</view>
 						</view>
+
+						<!--
 						<view class="message" v-if="item.TextType === 1" @tap="previewImg(item.sendText)">
 							<image :src="item.sendText" class="msg-img" mode="widthFix"></image>
 						</view>
+
 						<view class="message" v-if="item.TextType === 3" @tap="openLocation(item.sendText)">
-							<!-- 位置 -->
 							<view class="msg-map">
 								<view class="map-name">{{ item.sendText.name }}</view>
 								<view class="map-address">{{ item.sendText.address }}</view>
 								<map class="map" :longitude="item.sendText.longitude" :latitude="item.sendText.latitude"
 								     :markers="covers(item.sendText)"></map>
 							</view>
-						</view>
+						</view>-->
 					</view>
 				</view>
 			</view>
@@ -60,6 +65,8 @@
 <script>
 import dateTime from '../common/dateTime.js';
 import submit from '../components/submit.vue';
+import request from "../common/request";
+import moment from "../common/moment";
 
 export default {
 	data() {
@@ -121,7 +128,8 @@ export default {
 		this.id = options.id
 		this.friend = JSON.parse(options.friend)
 		this.me = JSON.parse(uni.getStorageSync('user'))
-
+		this.fetchData(options.id)
+		getApp().globalData.Echo.private('test.sub').listen('.transaction.created', () => console.log);
 		uni.setNavigationBarTitle({
 			title: this.friend.name
 		});
@@ -130,8 +138,24 @@ export default {
 		submit,
 	},
 	methods: {
+		fetchData(id) {
+			const that = this
+			request({
+				url: `/api/chat/${id}`,
+				method: "GET",
+				auth: true,
+				success(res) {
+					if (res.statusCode !== 200) {
+						console.log(res.data.message)
+					} else {
+						console.log(res.data.data)
+						that.unshiftmsg = res.data.data
+					}
+				}
+			})
+		},
 		changeTime(date) {
-			return dateTime.dateTime1(date);
+			return moment(date).fromNow();
 		},
 		// 进行图片的预览
 		previewImg(e) {
@@ -178,6 +202,24 @@ export default {
 				}
 			});
 		},
+		/**
+		 * @description 傳送訊息到後端
+		 * @param message: 訊息
+		 * */
+		sendMessage(message) {
+			request({
+				url: `/api/chat/${this.id}/send`,
+				method: "POST",
+				data: {
+					message
+				},
+				success(res) {
+					if (res.statusCode !== 200) {
+						console.log(res.data.message)
+					}
+				}
+			})
+		},
 		//接受输入内容
 		inputs(e) {
 			//时间间隔处理
@@ -190,8 +232,8 @@ export default {
 				"chatmState": 1,
 				"TextType": e.type
 			};
-			// 发送给服务器消息
-			// onSendWS(JSON.stringify(data));
+
+			this.sendMessage(e.message)
 
 			this.unshiftmsg.push(data);
 			// 跳转到最后一条数据 与前面的:id进行对照

@@ -4,12 +4,16 @@
 			<uni-list-item
 				:key="chat.id"
 				:title="getFriend(chat.conversation.participants).name"
-				:note="chat.conversation.last_message || '尚無訊息'"
-				showArrow
+				:note="makeNote(chat.conversation.last_message)"
+
 				:thumb="getFriend(chat.conversation.participants).avatar"
 				thumb-size="lg"
 				thumb-style="border-radius: 50%;"
+				:badge-text="String(unreadCount[chat.conversation.id].unread_count)"
+				badge-type="error"
 				:rightText="moment(chat.updated_at).fromNow()"
+				right-text-style="font-size: 20rpx;"
+				show-badge
 				@click="goto(chat)"
 			/>
 		</template>
@@ -22,24 +26,15 @@ import UniListItem from "../uni_modules/uni-list-item/uni-list-item";
 import request from "../common/request";
 import moment from "moment";
 import 'moment/locale/zh-tw';
+
 moment.locale('zh-tw');
 
 export default {
 	name: "chatList",
 	data() {
 		return {
-			chats: [
-				/*{
-					chat_type: 'user',
-					noreadnum: '',
-					data: '',
-					name: 'test',
-					id: '566',
-					avatar: '',
-					lastMessage:'笨蛋： 我是笨蛋',
-					updated_at: '十分鐘前'
-				}*/
-			],
+			chats: [],
+			unreadCount: {},
 			options: [],
 			me: {}
 		}
@@ -58,15 +53,21 @@ export default {
 					if (res.statusCode !== 200) {
 						console.log(res.data.message)
 					} else {
-						that.chats = res.data.data
+						that.unreadCount = res.data[1]
+						that.chats = res.data[0].data
 					}
 				}
 			})
 		},
+		makeNote(lastMessage) {
+			return (
+				lastMessage.body ? lastMessage.sender.name + ': ' + lastMessage.body : '尚無訊息'
+			)
+		},
 		getFriend(participants) {
 			return participants.filter(x => x.messageable.id !== this.me.id)[0].messageable
 		},
-		goto(chat){
+		goto(chat) {
 			const friend = this.getFriend(chat.conversation.participants)
 			uni.navigateTo({
 				url: `/pages/chat?id=${chat.conversation_id}&friend=${JSON.stringify(friend)}`
