@@ -52,7 +52,7 @@ export default {
 		fetch() {
 			const that = this
 			request({
-				url: '/api/chat_list',
+				url: '/api/chat/list',
 				auth: true,
 				success(res) {
 					if (res.statusCode !== 200) {
