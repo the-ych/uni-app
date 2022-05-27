@@ -62,7 +62,7 @@ export default {
 	},
 	onLoad() {
 		uni.showLoading({
-			title: '加载中'
+			title: '載入中'
 		});
 		this.fetchData()
 	},
@@ -74,7 +74,7 @@ export default {
 				success: (res) => {
 
 					uni.hideLoading({
-						title: '加载中'
+						title: '載入中'
 					});
 					if (res.statusCode !== 200) {
 						console.log(res.data.message)
@@ -122,7 +122,7 @@ export default {
 				'background-position': 'center',
 				'display': 'flex',
 				'flex-direction': 'column',
-				'justify-content':'flex-end',
+				'justify-content': 'flex-end',
 				'align-items': 'flex-start'
 			}
 		},
@@ -135,8 +135,8 @@ export default {
 			this.$set(this.swipeDotIndex, i, e)
 			this.$forceUpdate();
 		},
-		
-		like({ id }) {
+
+		like({id, name}) {
 			request({
 				url: '/api/relationship/like',
 				auth: true,
@@ -148,14 +148,25 @@ export default {
 					if (res.statusCode !== 200) {
 						console.log(res.data.message)
 					} else {
-						//this.cardHidden[id] = true
-						//this.$forceUpdate();
+						if (res.data.status === 'matched') {
+							uni.showModal({
+								title: '配對成功',
+								content: '恭喜你成功與'+name+'配對 🥳',
+								success: function (res) {
+									if (res.confirm) {
+										uni.switchTab({
+											url: '/pages/chatList'
+										})
+									}
+								}
+							});
+						}
 					}
 				}
 			})
 		},
-		
-		nope({ id }) {
+
+		nope({id}) {
 			request({
 				url: '/api/relationship/hate',
 				method: "POST",
