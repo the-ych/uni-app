@@ -188,7 +188,7 @@ button {
 	height: 175rpx;
 	padding: 20rpx;
 	box-sizing: border-box;
-	background-color: #0faeff;
+	background-color: #F7B3CD;
 	flex-direction: row;
 	align-items: center;
 }
