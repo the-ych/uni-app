@@ -10,7 +10,8 @@ export default {
 		this.globalData.Echo = new Echo({
 			broadcaster: 'pusher',
 			wsHost: process.env.VUE_APP_WS_HOST,
-			wsPort: 6001,
+			wsPath: process.env.VUE_APP_WS_PATH,
+			wsPort: process.env.VUE_APP_WS_PORT,
 			key: process.env.VUE_APP_PUSHER_APP_KEY,
 			cluster: process.env.VUE_APP_PUSHER_APP_CLUSTER,
 			forceTLS: false,
