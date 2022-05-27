@@ -107,7 +107,7 @@ export default {
 		this.friend = JSON.parse(options.friend)
 		this.me = JSON.parse(uni.getStorageSync('user'))
 		this.fetchData(options.id)
-		getApp().globalData.Echo.private('test.sub').listen('.transaction.created', () => console.log);
+		getApp().globalData.Echo.private(`conversation.${options.id}`).listen('.transaction.created', () => console.log);
 		uni.setNavigationBarTitle({
 			title: this.friend.name
 		});

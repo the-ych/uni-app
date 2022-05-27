@@ -1,9 +1,11 @@
 <script>
 import Echo from 'laravel-echo-uni';
+import request from "./common/request";
+
 export default {
 	onLaunch: function () {
 		console.log('App Launch');
-		
+
 		this.globalData.Pusher = require('pusher-js');
 		this.globalData.Echo = new Echo({
 			broadcaster: 'pusher',
@@ -11,9 +13,27 @@ export default {
 			wsPort: 6001,
 			key: process.env.VUE_APP_PUSHER_APP_KEY,
 			cluster: process.env.VUE_APP_PUSHER_APP_CLUSTER,
-			forceTLS: false
+			forceTLS: false,
+			authorizer(channel, options) {
+				return {
+					authorize: (socketId, callback) => {
+						request({
+							method: "POST",
+							auth: false,
+							url: '/broadcasting/auth',
+							data: {
+								socket_id: socketId,
+								channel_name: channel.name,
+							},
+							success(res) {
+								callback(false, res.data);
+							}
+						})
+					}
+				};
+			},
 		});
-		
+
 		setTimeout(() => {
 			uni.setTabBarBadge({
 				index: 1,
