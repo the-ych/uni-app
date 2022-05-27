@@ -32,19 +32,19 @@
 			<view class="center-list">
 				<view class="center-list-item border-bottom pointer">
 					<text class="list-icon"><i class="fa-solid fa-circle-question"></i></text>
-					<text class="list-text">帮助与反馈</text>
+					<text class="list-text">幫助與意見回饋</text>
 					<text class="navigat-arrow"><i class="fa-solid fa-chevron-right"></i></text>
 				</view>
 				<view class="center-list-item pointer">
 					<text class="list-icon"><i class="fa-solid fa-book"></i></text>
-					<text class="list-text">服务条款及隐私</text>
+					<text class="list-text">服務條款及隱私權條款</text>
 					<text class="navigat-arrow"><i class="fa-solid fa-chevron-right"></i></text>
 				</view>
 			</view>
 			<view class="center-list">
 				<view class="center-list-item pointer">
 					<text class="list-icon"><i class="fa-solid fa-circle-info"></i></text>
-					<text class="list-text">关于应用 (v{{ APP_VERSION }})</text>
+					<text class="list-text">關於YCH (v{{ APP_VERSION }})</text>
 					<text class="navigat-arrow"><i class="fa-solid fa-chevron-right"></i></text>
 				</view>
 			</view>
@@ -260,7 +260,7 @@ button {
 	width: 40rpx;
 	height: 90rpx;
 	line-height: 90rpx;
-	color: #0faeff;
+	color: #F7B3CD;
 	text-align: center;
 	margin-right: 20rpx;
 }
