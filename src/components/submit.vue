@@ -5,12 +5,13 @@
 				<view class="bt-img" @tap="more">
 					<uni-icons :type="btnMoreIcon" size="50"></uni-icons>
 				</view>
-				<textarea
+				<input
 					auto-height
+					@confirm="sendText"
 					class="chat-send btn"
 					@focus="focus"
 					v-model="msg"
-				></textarea>
+				></input>
 				<view class="bt-img" @tap="sendText">
 					<uni-icons type="paperplane-filled" size="50"></uni-icons>
 				</view>
