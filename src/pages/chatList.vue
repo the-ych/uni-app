@@ -61,7 +61,7 @@ export default {
 		},
 		makeNote(lastMessage) {
 			return (
-				lastMessage.body ? lastMessage.sender.name + ': ' + lastMessage.body : '尚無訊息'
+				lastMessage?.body ? lastMessage.sender.name + ': ' + lastMessage.body : '尚無訊息'
 			)
 		},
 		getFriend(participants) {

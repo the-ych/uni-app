@@ -70,6 +70,7 @@ export default {
 	},
 	methods: {
 		sendText() {
+			if(this.msg.replace('/ +/g', '') === "") return;
 			this.send(this.msg, 'text')
 		},
 		//获取高度方法
