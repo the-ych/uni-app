@@ -36,7 +36,7 @@
 					<!-- 自己傳的訊息 -->
 					<view class="msg-m msg-right" v-if="item.is_sender">
 						<image class="user-img" :src="me.avatar"></image>
-						
+
 						<view class="message" v-if="item.type === 'text'">
 							<view class="msg-text">{{ item.body }}</view>
 						</view>
@@ -68,6 +68,16 @@ import submit from '../components/submit.vue';
 import request from "../common/request";
 import moment from "../common/moment";
 
+/**
+ * 滾動到最下
+ * */
+function scrollToBottom(thisRef) {
+	thisRef.scrollToView = ''
+	thisRef.$nextTick(function () {
+		thisRef.scrollToView = 'msg' + (thisRef.msg.length - 1)
+	})
+}
+
 export default {
 	data() {
 		return {
@@ -78,10 +88,11 @@ export default {
 			imgMsg: [],
 			scrollToView: '',
 			oldTime: new Date(),
-			inputh: '60'
+			inputh: '70'
 		}
 	},
 	onShow() {
+		/*
 		for (var i = 0; i < this.msg.length; i++) {
 			//时间间隔处理
 			if (i < this.msg.length - 1) { //这里表示头部时间还是显示一下
@@ -96,21 +107,29 @@ export default {
 				this.imgMsg.unshift(this.msg[i].sendText)
 			}
 			this.unshiftmsg.unshift(this.msg[i]);
-		}
-		// 跳转到最后一条数据 与前面的:id进行对照
-		this.$nextTick(function () {
-			this.scrollToView = 'msg' + (this.msg.length - 1)
-		})
+		}*/
 	},
 	onLoad(options) {
 		this.id = options.id
 		this.friend = JSON.parse(options.friend)
 		this.me = JSON.parse(uni.getStorageSync('user'))
 		this.fetchData(options.id)
-		getApp().globalData.Echo.private(`conversation.${options.id}`).listen('.transaction.created', () => console.log);
+
+		getApp().globalData.Echo
+			.private('App.Models.User.' + this.me.id)
+			.notification((notification) => {
+				if (notification.type === 'conversation.message') {
+					this.msg.push(notification.message)
+					scrollToBottom(this)
+				}
+			});
 		uni.setNavigationBarTitle({
 			title: this.friend.name
 		});
+
+		setTimeout(() => {
+			scrollToBottom(this)
+		}, 200)
 	},
 	components: {
 		submit,
@@ -126,7 +145,6 @@ export default {
 					if (res.statusCode !== 200) {
 						console.log(res.data.message)
 					} else {
-						console.log(res.data.data)
 						that.msg = res.data.data
 					}
 				}
@@ -203,7 +221,7 @@ export default {
 			let data = {
 				"is_sender": 1,
 				"id": 1,
-				"body": "test",
+				"body": e.message,
 				"type": "text",
 				"data": [],
 				"created_at": new Date().toISOString(),
@@ -225,14 +243,7 @@ export default {
 		heights(e) {
 			console.log("高度:", e)
 			this.inputh = e;
-			this.goBottom();
-		},
-		// 滚动到底部
-		goBottom() {
-			this.scrollToView = '';
-			this.$nextTick(function () {
-				this.scrollToView = 'msg' + (this.msg.length - 1)
-			})
+			scrollToBottom(this);
 		}
 	}
 }
