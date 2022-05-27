@@ -35,7 +35,7 @@
 					<text class="list-text">幫助與意見回饋</text>
 					<text class="navigat-arrow"><i class="fa-solid fa-chevron-right"></i></text>
 				</view>
-				<view class="center-list-item pointer">
+				<view class="center-list-item pointer" @click="openURL('https://policy.hsuan.app')">
 					<text class="list-icon"><i class="fa-solid fa-book"></i></text>
 					<text class="list-text">服務條款及隱私權條款</text>
 					<text class="navigat-arrow"><i class="fa-solid fa-chevron-right"></i></text>
@@ -58,6 +58,7 @@
 </template>
 
 <script>
+import openURL from "../common/openURL";
 const APP_VERSION = process.env.VUE_APP_VERSION
 export default {
 	data() {
@@ -129,6 +130,7 @@ export default {
 				}
 			})
 		},
+		openURL
 	}
 }
 </script>
