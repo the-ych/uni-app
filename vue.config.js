@@ -112,7 +112,7 @@ module.exports = {
                 },
                 {
                     "src": "./static/favicon/icons/maskable_icon.png",
-                    "sizes": "1024x1024",
+                    "sizes": "512x512",
                     "type": "image/png",
                     "purpose": "maskable"
                 },
@@ -122,8 +122,8 @@ module.exports = {
             "background_color": "#000000"
         },
         name: 'YCH',
-        themeColor: '#0faeff',
-        msTileColor: '#000000',
+        themeColor: '#F7B3CD',
+        msTileColor: '#F7B3CD',
         appleMobileWebAppCapable: 'yes',
         appleMobileWebAppStatusBarStyle: 'black',
         iconPaths: {
