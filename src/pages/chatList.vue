@@ -40,7 +40,13 @@ export default {
 		}
 	},
 	onLoad() {
-		this.me = JSON.parse(uni.getStorageSync('user'))
+		try {
+			this.me = JSON.parse(uni.getStorageSync('user'))
+		} catch (e) {
+			uni.reLaunch({
+				url: '/pages/me?action=toast&message=您尚未登入&type=error'
+			})
+		}
 		this.fetch()
 	},
 	methods: {
