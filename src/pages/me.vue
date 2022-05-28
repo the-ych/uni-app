@@ -54,13 +54,18 @@
 				</button>
 			</view>
 		</view>
+		<promptInstall></promptInstall>
 	</view>
 </template>
 
 <script>
+import promptInstall from "../components/promptInstall";
 import openURL from "../common/openURL";
 const APP_VERSION = process.env.VUE_APP_VERSION
 export default {
+	components: {
+		promptInstall
+	},
 	data() {
 		return {
 			name: '',
