@@ -167,8 +167,6 @@ export default {
 	bottom: var(--window-bottom);
 	left: 0;
 	right: 0;
-	height: calc(0.5 * 125rpx);
-	line-height: calc(0.5 *100rpx);
 	background: #fff;
 }
 
