@@ -8,8 +8,8 @@
 			<image src="@/static/images/logo.png"/>
 		</view>
 
-		<view style="margin-top: 30rpx;margin-left: 30rpx;margin-right: 30rpx;background-color: lightblue;padding: 30rpx;border-radius: 30rpx;">
-
+		<view
+			style="margin-top: 30rpx;margin-left: 30rpx;margin-right: 30rpx;background-color: lightblue;padding: 50rpx 30rpx;border-radius: 30rpx;">
 			<uni-forms ref="form" :modelValue="formData" :rules="rules">
 				<uni-forms-item label="信箱" name="email">
 					<uni-easyinput type="text" v-model="formData.email" placeholder="請輸入電子信箱"/>
