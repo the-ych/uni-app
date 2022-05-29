@@ -56,15 +56,15 @@
 			}
 		},
 		{
-			"path": "pages/tabbar-3-detial/tabbar-3-release/tabbar-3-release",
+			"path": "pages/add",
 			"style": {}
 		},
 		{
-			"path": "pages/tabbar-3-detial/tabbar-3-video/tabbar-3-video",
+			"path": "pages/post/anonymous-ask",
 			"style": {}
 		},
 		{
-			"path": "pages/tabbar-3-detial/tabbar-3-qa/tabbar-3-qa",
+			"path": "pages/post/post",
 			"style": {}
 		}
 	],
@@ -93,7 +93,7 @@
 			},
 			//#ifdef MP-WEIXIN
 			{
-				"pagePath": "pages/tabbar/tabbar-3/tabbar-3",
+				"pagePath": "pages/add",
 				"iconPath": "static/img/tabbar/add.png",
 				"selectedIconPath": "static/img/tabbar/addactive.png",
 				"text": "发布"
@@ -101,7 +101,7 @@
 			//#endif
 			//#ifndef MP-WEIXIN
 			{
-				"pagePath": "pages/tabbar/tabbar-3/tabbar-3",
+				"pagePath": "pages/add",
 				"iconPath": "static/img/tabbar/add.png",
 				"selectedIconPath": "static/img/tabbar/addactive.png"
 			},
