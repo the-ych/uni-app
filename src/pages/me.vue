@@ -13,6 +13,13 @@
 					</text>
 				</view>
 			</view>
+
+			<view class="center-list">
+				<view v-if="logined" class="center-list-item border-bottom pointer" >
+					<text class="list-icon">🅨</text>
+					<text class="list-text">共有： {{ me.wallet.balance }}個 <text class="color-orange">🅨</text> 幣</text>
+				</view>
+			</view>
 			<view class="center-list">
 				<!--
 				<view class="center-list-item border-bottom" v-show="logined && hasPwd" @click="goto">
@@ -78,6 +85,10 @@ export default {
 	},
 	data() {
 		return {
+			me: {
+				profile:{},
+				wallet: {}
+			},
 			name: '',
 			logined: false,
 			avatarUrl: '../static/logo.png',
@@ -106,6 +117,7 @@ export default {
 			const avatar = user.profile.avatar;
 			if (value) {
 				// 已登入
+				this.me = user
 				this.logined = true
 				this.name = user.name
 			}
