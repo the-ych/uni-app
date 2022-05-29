@@ -18,7 +18,8 @@
 					               :input-border="false" :styles="{disableColor: 'white'}"/>
 				</uni-forms-item>
 				<uni-forms-item label="自我介绍" name="introduction" required>
-					<uni-easyinput type="textarea" v-model="profileForm.profile.introduction" placeholder="请输入自我介绍" suffix-icon="false"/>
+					<uni-easyinput type="textarea" v-model="profileForm.profile.introduction" placeholder="请输入自我介绍"
+					               suffix-icon="false"/>
 				</uni-forms-item>
 			</uni-forms>
 			<button v-if="update_profile_show">更新</button>
@@ -62,22 +63,3 @@ export default {
 	}
 }
 </script>
-
-<style scoped>
-.block {
-	display: block;
-}
-
-.uni-h6 {
-	font-size: 12pt;
-}
-
-.text-small {
-	color: darkgrey;
-	font-size: 10pt;
-}
-
-.ml-small-space {
-	margin-left: 5rpx;
-}
-</style>

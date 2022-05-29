@@ -1,7 +1,7 @@
 <script>
 import Echo from 'laravel-echo-uni';
 import request from "./common/request";
-
+import '@/styles/common.css';
 export default {
 	onLaunch: function () {
 		console.log('App Launch');

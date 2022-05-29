@@ -17,7 +17,7 @@
 				<uni-forms-item label="密碼" name="password">
 					<uni-easyinput type="password" v-model="formData.password" placeholder="請輸入密碼" @confirm="submit"/>
 				</uni-forms-item>
-				<button @click="submit">登入 / 註冊</button>
+				<button @click="submit" style="width: 100%;">登入 / 註冊</button>
 			</uni-forms>
 
 		</view>

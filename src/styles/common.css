@@ -1,5 +1,22 @@
 @import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css);
 
+.block {
+    display: block;
+}
+
+.uni-h6 {
+    font-size: 12pt;
+}
+
+.text-small {
+    color: darkgrey;
+    font-size: 10pt;
+}
+
+.ml-small-space {
+    margin-left: 5rpx;
+}
+
 .index {
     flex: 1;
     width: 750upx;

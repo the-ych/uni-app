@@ -2,7 +2,7 @@
 	<view class="content">
 		<view style="padding-bottom: 50rpx;">
 			<Tinder ref="tinder" key-name="id" :queue.sync="queue" :offset-y="10" @submit="onSubmit"
-			        style="height: 75vh;margin: 0 50rpx;">
+			        style="height: 75vh;margin: 0 50rpx;" v-if="queue.length">
 				<template v-slot="scope">
 					<view
 						class="pic"
@@ -24,7 +24,12 @@
 					</view>
 				</template>
 			</Tinder>
-			<view class="btns">
+			<view v-if="queue.length===0" style="padding: 50% 0;">
+				<image src="@/static/images/logo.png"/>
+				<text class="uni-h6 block">沒有人了QQ</text>
+				<text class="uni-h6 block">快快邀請好友加入或調整你的設定</text>
+			</view>
+			<view class="btns" v-if="queue.length">
 				<image src="@/static/buttons/hate.png" @click="btnClick('nope')"></image>
 				<image src="@/static/buttons/super.png" @click="btnClick('super')"></image>
 				<image src="@/static/buttons/like.png" @click="btnClick('like')"></image>

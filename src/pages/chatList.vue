@@ -1,23 +1,31 @@
 <template>
-	<uni-list>
-		<template v-for="chat in chats">
-			<uni-list-item
-				:key="chat.id"
-				:title="getFriend(chat.conversation.participants).name"
-				:note="makeNote(chat.conversation.last_message)"
+	<view>
+		<uni-list v-if="chats.length">
+			<template v-for="chat in chats">
+				<uni-list-item
+					:key="chat.id"
+					:title="getFriend(chat.conversation.participants).name"
+					:note="makeNote(chat.conversation.last_message)"
 
-				:thumb="getFriend(chat.conversation.participants).avatar"
-				thumb-size="lg"
-				thumb-style="border-radius: 50%;"
-				:badge-text="String(unreadCount[chat.conversation.id].unread_count)"
-				badge-type="error"
-				:rightText="moment(chat.updated_at).fromNow()"
-				right-text-style="font-size: 20rpx;"
-				show-badge
-				@click="goto(chat)"
-			/>
-		</template>
-	</uni-list>
+					:thumb="getFriend(chat.conversation.participants).avatar"
+					thumb-size="lg"
+					thumb-style="border-radius: 50%;"
+					:badge-text="String(unreadCount[chat.conversation.id].unread_count)"
+					badge-type="error"
+					:rightText="moment(chat.updated_at).fromNow()"
+					right-text-style="font-size: 20rpx;"
+					show-badge
+					@click="goto(chat)"
+				/>
+			</template>
+		</uni-list>
+
+		<view v-if="chats.length===0" style="margin-top: 50%;display: flex; align-self: center;flex-direction: column;justify-content: center;align-items: center">
+			<image src="@/static/images/logo.png"/>
+			<text class="uni-h6 block">目前沒有人陪你聊天ＱＱ</text>
+			<text class="uni-h6 block">請持續翻卡卡</text>
+		</view>
+	</view>
 </template>
 
 <script>
