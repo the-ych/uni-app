@@ -17,6 +17,14 @@
 					<uni-easyinput type="text" v-model="me.gender" disabled suffix-icon="false"
 					               :input-border="false" :styles="{disableColor: 'white'}"/>
 				</uni-forms-item>
+				<uni-forms-item label="學校" name="school">
+					<view style="border: 1rpx grey solid;">
+						<uni-list>
+							<uni-list-item @click="applySchool" :title="user_school" text-style="font-size: 12pt;"
+							               container-style="height: 15rpx;"></uni-list-item>
+						</uni-list>
+					</view>
+				</uni-forms-item>
 				<uni-forms-item label="自我介绍" name="introduction" required>
 					<uni-easyinput type="textarea" v-model="profileForm.introduction" placeholder="请输入自我介绍"
 					               suffix-icon="false"/>
@@ -33,11 +41,17 @@
 <script>
 import UniEasyinput from "../uni_modules/uni-easyinput/components/uni-easyinput/uni-easyinput";
 import request from "../common/request";
+import UniIcons from "../uni_modules/uni-icons/components/uni-icons/uni-icons";
+import UniListItem from "../uni_modules/uni-list-item/uni-list-item";
+import UniList from "../uni_modules/uni-list/uni-list";
 
 export default {
 	name: "profile",
 	components: {
-		UniEasyinput
+		UniListItem,
+		UniIcons,
+		UniEasyinput,
+		UniList
 	},
 	data() {
 		return {
@@ -48,6 +62,7 @@ export default {
 					required: true
 				}
 			},
+			user_school: '',
 			update_profile_show: false
 		}
 	},
@@ -72,6 +87,11 @@ export default {
 					})
 				}
 			})
+		},
+		applySchool() {
+			uni.navigateTo({
+				url: '/pages/prove/school'
+			})
 		}
 	},
 	onLoad() {
@@ -80,10 +100,10 @@ export default {
 			url: '/api/user',
 			success(res) {
 				const me = res.data;
-				console.log(me)
 				uni.setStorageSync('user', me)
 				that.me = me
 				that.profileForm = me.profile
+				that.user_school = me.school ?? '尚無填寫學校或仍在審核'
 				setTimeout(() => that.update_profile_show = false, 100)
 			}
 		})

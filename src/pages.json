@@ -66,6 +66,11 @@
 		{
 			"path": "pages/post/post",
 			"style": {}
+		},
+		{
+			"path": "pages/prove/school",
+			"style": {
+              "navigationBarTitleText": "驗證學校"}
 		}
 	],
 	"globalStyle": {
