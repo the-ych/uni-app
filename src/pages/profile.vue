@@ -18,11 +18,11 @@
 					               :input-border="false" :styles="{disableColor: 'white'}"/>
 				</uni-forms-item>
 				<uni-forms-item label="自我介绍" name="introduction" required>
-					<uni-easyinput type="textarea" v-model="profileForm.profile.introduction" placeholder="请输入自我介绍"
+					<uni-easyinput type="textarea" v-model="profileForm.introduction" placeholder="请输入自我介绍"
 					               suffix-icon="false"/>
 				</uni-forms-item>
 			</uni-forms>
-			<button v-if="update_profile_show">更新</button>
+			<button v-if="update_profile_show" @click="updateProfile">更新</button>
 		</uni-group>
 
 		<uni-group title="我想找">
@@ -42,9 +42,7 @@ export default {
 	data() {
 		return {
 			me: {},
-			profileForm: {
-				profile: {}
-			},
+			profileForm: {},
 			profileRules: {
 				introduction: {
 					required: true
@@ -56,6 +54,24 @@ export default {
 	methods: {
 		showProfileUpdate() {
 			this.update_profile_show = true
+		},
+		updateProfile() {
+			const {
+				introduction
+			} = this.profileForm
+			request({
+				url: '/api/profile/update',
+				data: {
+					introduction
+				},
+				method: "POST",
+				success(res) {
+					uni.setStorageSync('user', res.data.data)
+					uni.showToast({
+						title: '更新成功'
+					})
+				}
+			})
 		}
 	},
 	onLoad() {
@@ -67,7 +83,7 @@ export default {
 				console.log(me)
 				uni.setStorageSync('user', me)
 				that.me = me
-				that.profileForm = me
+				that.profileForm = me.profile
 				setTimeout(() => that.update_profile_show = false, 100)
 			}
 		})
