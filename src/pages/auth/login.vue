@@ -1,6 +1,14 @@
 <template>
 	<view class="content">
-		<view style="margin-top: 30rpx;margin-left: 30rpx;margin-right: 30rpx;">
+		<image
+			style="position: absolute;z-index: -1;left: 0;right: 0;bottom: 0;width: 100%;height: 100%;"
+			src="@/static/images/bg.jpg"
+		/>
+		<view style="margin-top: 50%;">
+			<image src="@/static/images/logo.png"/>
+		</view>
+
+		<view style="margin-top: 30rpx;margin-left: 30rpx;margin-right: 30rpx;background-color: lightblue;padding: 30rpx;border-radius: 30rpx;">
 
 			<uni-forms ref="form" :modelValue="formData" :rules="rules">
 				<uni-forms-item label="信箱" name="email">

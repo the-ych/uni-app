@@ -1,11 +1,16 @@
 <template>
 	<view class="">
 		<view class="center">
-			<view class="logo" @click="auth" :hover-class="!logined ? 'logo-hover' : ''">
+			<view class="logo" @click="clickProfile" :hover-class="!logined ? 'logo-hover' : ''">
 				<image class="logo-img" :src="avatarUrl"></image>
 				<view class="logo-title">
-					<text class="user-name">Hi，{{ logined ? name + ' 歡迎你使用YCH' : '您未登入' }}</text>
-					<text class="go-login navigat-arrow" v-if="!logined"><i class="fa-solid fa-arrow-right"></i></text>
+					<text class="user-name">Hi，{{ logined ? name : '您未登入' }}</text>
+					<text class="go-login navigat-arrow" style="margin-right: 20rpx;" v-if="!logined">
+						<uni-icons type="forward" size="30" color="white"></uni-icons>
+					</text>
+					<text class="go-login navigat-arrow" style="margin-right: 20rpx;" v-if="logined">
+						<uni-icons type="settings-filled" size="30" color="white"></uni-icons>
+					</text>
 				</view>
 			</view>
 			<view class="center-list">
@@ -49,7 +54,9 @@
 				</view>
 			</view>
 			<view class="btn-row place-bottom">
-				<button v-if="logined" class="primary" style="border-bottom-left-radius: 0;border-bottom-right-radius: 0;border-top-left-radius: 12pt;border-top-right-radius: 12pt;font-size: 16pt;" type="primary" :loading="logoutBtnLoading"
+				<button v-if="logined" class="primary"
+				        style="border-bottom-left-radius: 0;border-bottom-right-radius: 0;border-top-left-radius: 12pt;border-top-right-radius: 12pt;font-size: 16pt;"
+				        type="primary" :loading="logoutBtnLoading"
 				        @tap="logout">登出
 				</button>
 			</view>
@@ -61,9 +68,12 @@
 <script>
 import promptInstall from "../components/promptInstall";
 import openURL from "../common/openURL";
+import UniIcons from "../uni_modules/uni-icons/components/uni-icons/uni-icons";
+
 const APP_VERSION = process.env.VUE_APP_VERSION
 export default {
 	components: {
+		UniIcons,
 		promptInstall
 	},
 	data() {
@@ -77,7 +87,7 @@ export default {
 	},
 	onLoad(options) {
 		if (options.action === 'toast') {
-			if(options.type){
+			if (options.type) {
 				uni.showToast({
 					title: options.message,
 					icon: options.type
@@ -100,7 +110,7 @@ export default {
 				this.name = user.name
 			}
 
-			if(avatar){
+			if (avatar) {
 				this.avatarUrl = avatar
 			}
 		} catch (e) {
@@ -108,10 +118,14 @@ export default {
 		}
 	},
 	methods: {
-		auth() {
+		clickProfile() {
 			if (!this.logined) {
 				uni.navigateTo({
 					url: '/pages/auth/login'
+				})
+			} else {
+				uni.navigateTo({
+					url: '/pages/profile'
 				})
 			}
 		},

@@ -14,6 +14,12 @@
             }
 		},
 		{
+			"path": "pages/profile",
+			"style": {
+              "navigationBarTitleText": "個人資料"
+            }
+		},
+		{
 			"path": "pages/chat",
 			"style": {
               "navigationBarTitleText": "聊天室"
