@@ -100,7 +100,7 @@ export default {
 		}
 
 		try {
-			const user = JSON.parse(uni.getStorageSync('user'))
+			const user = uni.getStorageSync('user')
 			const value = uni.getStorageSync('access_token');
 
 			const avatar = user.profile.avatar;
@@ -114,7 +114,7 @@ export default {
 				this.avatarUrl = avatar
 			}
 		} catch (e) {
-			// error
+
 		}
 	},
 	methods: {

@@ -41,7 +41,7 @@ export default {
 	},
 	onLoad() {
 		try {
-			this.me = JSON.parse(uni.getStorageSync('user'))
+			this.me = uni.getStorageSync('user')
 		} catch (e) {
 			uni.reLaunch({
 				url: '/pages/me?action=toast&message=您尚未登入&type=error'

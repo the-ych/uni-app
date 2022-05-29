@@ -112,7 +112,7 @@ export default {
 	onLoad(options) {
 		this.id = options.id
 		this.friend = JSON.parse(options.friend)
-		this.me = JSON.parse(uni.getStorageSync('user'))
+		this.me = uni.getStorageSync('user')
 		this.fetchData(options.id)
 
 		getApp().globalData.Echo

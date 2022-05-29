@@ -5,25 +5,26 @@
 
 			<uni-forms ref="form" :modelValue="formData" :rules="rules" style="margin-top: 50rpx;">
 				<view v-if="currentStep === 0">
-					<uni-forms-item label="信箱" name="email">
+					<uni-forms-item label="信箱" name="email" required>
 						<uni-easyinput type="text" v-model="formData.email" placeholder="請輸入電子郵件"/>
 					</uni-forms-item>
-					<uni-forms-item label="密碼" name="password">
+					<uni-forms-item label="密碼" name="password" required>
 						<uni-easyinput type="password" v-model="formData.password" placeholder="請輸入密碼"/>
 					</uni-forms-item>
 				</view>
 				<view v-if="currentStep === 1">
-					<uni-forms-item label="姓名" name="name">
+					<uni-forms-item label="姓名" name="name" required>
 						<uni-easyinput type="text" v-model="formData.name" placeholder="請輸入您的姓名"/>
 					</uni-forms-item>
-					<uni-forms-item label="性別" name="gender">
-						<uni-data-picker placeholder="選擇你的性別" popup-title="請選擇性別" :localdata="genderSelection"
-						                 v-model="formData.gender">
-						</uni-data-picker>
+					<uni-forms-item label="性別" name="gender" required>
+						<uni-data-checkbox placeholder="選擇你的性別" v-model="formData.gender" :localdata="genderSelection" />
+					</uni-forms-item>
+					<uni-forms-item label="自我介绍" name="introduction" required>
+						<uni-easyinput type="textarea" v-model="formData.introduction" placeholder="簡單介紹一下自己吧" suffix-icon="false"/>
 					</uni-forms-item>
 				</view>
 				<view v-if="currentStep === 2">
-					<uni-card title="選擇要顯示的照片" :isFull="true">
+					<uni-card title="選擇要顯示的照片 (至少一張*)" :isFull="true">
 						<view style="padding: 10px;padding-top: 0;">
 							<uni-file-picker fileMediatype="image" ref="imageUploader" limit="3" title="最多3張照片"
 							                 mode="grid" :autoUpload="false" @select="selectImg($event)"
@@ -36,7 +37,7 @@
 		</view>
 
 		<view style="width: auto;position:fixed;bottom:0;left: 5rpx;right: 5rpx;">
-			<button @click="currentStep--" v-if="currentStep!==0" class="action-button">上一步</button>
+			<button @click="currentStep--;images=[]" v-if="currentStep!==0" class="action-button">上一步</button>
 			<button @click="currentStep++" v-if="currentStep!==steps.length-1" class="action-button">下一步</button>
 			<button type="primary" @click="submit" v-if="currentStep===steps.length-1" class="action-button">提交</button>
 		</view>
@@ -44,6 +45,8 @@
 </template>
 
 <script>
+import request from "../../common/request";
+
 export default {
 	data() {
 		return {
@@ -59,7 +62,8 @@ export default {
 				name: '',
 				email: '',
 				password: '',
-				gender: '男'
+				gender: '男',
+				introduction: ''
 			},
 			rules: {
 				name: {
@@ -93,6 +97,12 @@ export default {
 						required: true,
 						errorMessage: '請選擇性別',
 					}]
+				},
+				introduction: {
+					rules: [{
+						required: true,
+						errorMessage: '請輸入自我介紹',
+					}]
 				}
 			},
 			images: [],
@@ -125,13 +135,23 @@ export default {
 				name,
 				email,
 				gender,
-				password
+				password,
+				introduction
 			} = this.formData
+
+			if(this.images.length === 0) {
+				uni.showToast({
+					title: '至少上傳一張照片才能註冊',
+					icon: 'error'
+				})
+				return 
+			}
+
 			uni.showLoading({
 				title: '上傳中'
 			})
-			uni.request({
-				url: process.env.VUE_APP_API_ENDPOINT + '/api/auth/register',
+			request({
+				url: '/api/auth/register',
 				header: {
 					'Accept': 'application/json'
 				},
@@ -141,6 +161,7 @@ export default {
 					email,
 					password,
 					gender,
+					introduction,
 					device_name: this.device_name
 				},
 				success: (res) => {
@@ -161,7 +182,7 @@ export default {
 								name: "photo",
 								complete() {
 									if (image_uploaded === image_length - 1) {
-										uni.switchTab({
+										uni.reLaunch({
 											url: '/pages/me?action=toast&message=註冊成功'
 										})
 									} else {
