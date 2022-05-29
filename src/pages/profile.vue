@@ -32,6 +32,7 @@
 
 <script>
 import UniEasyinput from "../uni_modules/uni-easyinput/components/uni-easyinput/uni-easyinput";
+import request from "../common/request";
 
 export default {
 	name: "profile",
@@ -41,7 +42,9 @@ export default {
 	data() {
 		return {
 			me: {},
-			profileForm: {},
+			profileForm: {
+				profile: {}
+			},
 			profileRules: {
 				introduction: {
 					required: true
@@ -56,10 +59,18 @@ export default {
 		}
 	},
 	onLoad() {
-		const me = uni.getStorageSync('user')
-		console.log(me)
-		this.me = me
-		this.profileForm = me
+		const that = this
+		request({
+			url: '/api/user',
+			success(res) {
+				const me = res.data;
+				console.log(me)
+				uni.setStorageSync('user', me)
+				that.me = me
+				that.profileForm = me
+				setTimeout(() => that.update_profile_show = false, 100)
+			}
+		})
 	}
 }
 </script>
