@@ -34,16 +34,16 @@
 		</uni-group>
 
 		<uni-group title="我想找" style="padding-bottom: 300rpx;">
-			<uni-forms :modelValue="settingsForm" @validate="showSettingsUpdate" :rules="settingsRules">
+			<uni-forms ref="settingsFormRef" :modelValue="settingsForm">
 
-				<uni-forms-item label="學校下限" name="school_min" required>
+				<uni-forms-item label="學校下限" name="school_min">
 					<uni-data-select
 						v-model="settingsForm.school_min"
 						:localdata="schoolRankSelect"
 						placeholder="請選擇學校下限"
 					></uni-data-select>
 				</uni-forms-item>
-				<uni-forms-item label="學校上限" name="school_max" required>
+				<uni-forms-item label="學校上限" name="school_max">
 					<uni-data-select
 						v-model="settingsForm.school_max"
 						:localdata="schoolRankSelect"
@@ -52,7 +52,7 @@
 					></uni-data-select>
 				</uni-forms-item>
 			</uni-forms>
-			<button v-if="update_settings_show" @click="updateSettings">更新</button>
+			<button @click="updateSettings">更新找尋資料</button>
 		</uni-group>
 	</scroll-view>
 </template>
@@ -94,13 +94,35 @@ export default {
 			],
 			settingsForm: {},
 			settingsRules: {
-				school_min: {},
-				school_max: {}
+				school_min: {
+					rules: [{
+						validateFunction: function (rule, value, data, callback) {
+							// 這邊會這樣寫是因為 越好的學校數值越小
+							if (data.school_max > data.school_min) {
+								callback('請勿讓上限低於下限')
+							}
+							return true
+						}
+					}]
+				},
+				school_max: {
+					rules: [{
+						validateFunction: function (rule, value, data, callback) {
+							if (data.school_max > data.school_min) {
+								callback('請勿讓上限低於下限')
+							}
+							return true
+						}
+					}]
+				},
 			},
 			user_school: '',
 			update_profile_show: false,
 			update_settings_show: false
 		}
+	},
+	onReady() {
+		this.$refs.settingsFormRef.setRules(this.settingsRules)
 	},
 	methods: {
 		showProfileUpdate() {
@@ -128,21 +150,25 @@ export default {
 			})
 		},
 		updateSettings() {
-			const {
-				introduction
-			} = this.profileForm
-			request({
-				url: '/api/profile/update',
-				data: {
-					introduction
-				},
-				method: "POST",
-				success(res) {
-					uni.setStorageSync('user', res.data.data)
-					uni.showToast({
-						title: '更新成功'
-					})
-				}
+			this.$refs.settingsFormRef.validate().then(() => {
+				const {
+					school_max,
+					school_min
+				} = this.settingsForm
+				request({
+					url: '/api/settings/update',
+					data: {
+						school_max,
+						school_min
+					},
+					method: "POST",
+					success(res) {
+						uni.setStorageSync('user', res.data.data)
+						uni.showToast({
+							title: '更新成功'
+						})
+					}
+				})
 			})
 		},
 		applySchool() {
@@ -160,6 +186,7 @@ export default {
 				uni.setStorageSync('user', me)
 				that.me = me
 				that.profileForm = me.profile
+				that.settingsForm = me.setting
 				that.user_school = me.school ?? '尚無填寫學校或仍在審核'
 				setTimeout(() => that.update_profile_show = false, 100)
 			}
