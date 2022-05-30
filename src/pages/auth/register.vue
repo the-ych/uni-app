@@ -22,6 +22,9 @@
 					<uni-forms-item label="自我介绍" name="introduction" required>
 						<uni-easyinput type="textarea" v-model="formData.introduction" placeholder="簡單介紹一下自己吧" suffix-icon="false"/>
 					</uni-forms-item>
+					<uni-forms-item label="生日" name="birthday" required>
+						<uni-datetime-picker type="date" :clear-icon="false" v-model="formData.birthday"/>
+					</uni-forms-item>
 				</view>
 				<view v-if="currentStep === 2">
 					<uni-card title="選擇要顯示的照片 (至少一張*)" :isFull="true">
@@ -63,7 +66,8 @@ export default {
 				email: '',
 				password: '',
 				gender: '男',
-				introduction: ''
+				introduction: '',
+				birthday: ''
 			},
 			rules: {
 				name: {
@@ -103,6 +107,12 @@ export default {
 						required: true,
 						errorMessage: '請輸入自我介紹',
 					}]
+				},
+				birthday: {
+					rules: [{
+						required: true,
+						errorMessage: '請輸入生日',
+					}]
 				}
 			},
 			images: [],
@@ -136,7 +146,8 @@ export default {
 				email,
 				gender,
 				password,
-				introduction
+				introduction,
+				birthday
 			} = this.formData
 
 			if(this.images.length === 0) {
@@ -162,6 +173,7 @@ export default {
 					password,
 					gender,
 					introduction,
+					birthday,
 					device_name: this.device_name
 				},
 				success: (res) => {
