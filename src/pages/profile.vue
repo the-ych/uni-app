@@ -41,6 +41,7 @@
 						v-model="settingsForm.school_min"
 						:localdata="schoolRankSelect"
 						placeholder="請選擇學校下限"
+						@change="showSettingsUpdate"
 					></uni-data-select>
 				</uni-forms-item>
 				<uni-forms-item label="學校上限" name="school_max">
@@ -48,11 +49,11 @@
 						v-model="settingsForm.school_max"
 						:localdata="schoolRankSelect"
 						placeholder="請選擇學校上限"
-						label=""
+						@change="showSettingsUpdate"
 					></uni-data-select>
 				</uni-forms-item>
 			</uni-forms>
-			<button @click="updateSettings">更新找尋資料</button>
+			<button v-if="update_settings_show" @click="updateSettings">更新找尋資料</button>
 		</uni-group>
 	</scroll-view>
 </template>
@@ -189,6 +190,7 @@ export default {
 				that.settingsForm = me.setting
 				that.user_school = me.school ?? '尚無填寫學校或仍在審核'
 				setTimeout(() => that.update_profile_show = false, 100)
+				setTimeout(() => that.update_settings_show = false, 100)
 			}
 		})
 	}
