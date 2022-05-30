@@ -8,13 +8,17 @@
 		</uni-card>
 
 		<uni-group title="個人資料">
-			<uni-forms :modelValue="profileForm" @validate="showProfileUpdate" :rules="profileRules">
+			<uni-forms :modelValue="profileForm" @validate="showProfileUpdate" :rules="profileRules" ref="profileFormRef">
 				<uni-forms-item label="姓名" name="name">
 					<uni-easyinput type="text" v-model="me.name" disabled suffix-icon="false"
 					               :input-border="false" :styles="{disableColor: 'white'}"/>
 				</uni-forms-item>
 				<uni-forms-item label="性別" name="gender">
 					<uni-easyinput type="text" v-model="me.gender" disabled suffix-icon="false"
+					               :input-border="false" :styles="{disableColor: 'white'}"/>
+				</uni-forms-item>
+				<uni-forms-item label="年齡" name="age">
+					<uni-easyinput type="text" v-model="me.age" disabled suffix-icon="false"
 					               :input-border="false" :styles="{disableColor: 'white'}"/>
 				</uni-forms-item>
 				<uni-forms-item label="學校" name="school">
@@ -28,6 +32,9 @@
 				<uni-forms-item label="自我介绍" name="introduction" required>
 					<uni-easyinput type="textarea" v-model="profileForm.introduction" placeholder="请输入自我介绍"
 					               suffix-icon="false"/>
+				</uni-forms-item>
+				<uni-forms-item label="生日" name="birthday" required>
+					<uni-datetime-picker type="date" :clear-icon="false" v-model="profileForm.birthday"/>
 				</uni-forms-item>
 			</uni-forms>
 			<button v-if="update_profile_show" @click="updateProfile">更新</button>
@@ -65,6 +72,10 @@ import UniIcons from "../uni_modules/uni-icons/components/uni-icons/uni-icons";
 import UniListItem from "../uni_modules/uni-list-item/uni-list-item";
 import UniList from "../uni_modules/uni-list/uni-list";
 import UniDataSelect from "../uni_modules/uni-data-select/components/uni-data-select/uni-data-select";
+import UniDatetimePicker from "../uni_modules/uni-datetime-picker/components/uni-datetime-picker/uni-datetime-picker";
+import UniGroup from "../uni_modules/uni-group/components/uni-group/uni-group";
+import UniFormsItem from "../uni_modules/uni-forms/components/uni-forms-item/uni-forms-item";
+import UniForms from "../uni_modules/uni-forms/components/uni-forms/uni-forms";
 
 export default {
 	name: "profile",
@@ -73,7 +84,11 @@ export default {
 		UniIcons,
 		UniEasyinput,
 		UniList,
-		UniDataSelect
+		UniDataSelect,
+		UniDatetimePicker,
+		UniGroup,
+		UniForms,
+		UniFormsItem,
 	},
 	data() {
 		return {
@@ -81,7 +96,16 @@ export default {
 			profileForm: {},
 			profileRules: {
 				introduction: {
-					required: true
+					rules: [{
+						required: true,
+						errorMessage: '自我介紹必填'
+					}]
+				},
+				birthday: {
+					rules: [{
+						required: true,
+						errorMessage: '生日必填'
+					}]
 				}
 			},
 			schoolRankSelect: [
@@ -133,21 +157,32 @@ export default {
 			this.update_settings_show = true
 		},
 		updateProfile() {
-			const {
-				introduction
-			} = this.profileForm
-			request({
-				url: '/api/profile/update',
-				data: {
-					introduction
-				},
-				method: "POST",
-				success(res) {
-					uni.setStorageSync('user', res.data.data)
-					uni.showToast({
-						title: '更新成功'
-					})
-				}
+			this.$refs.profileFormRef.validate().then(()=>{
+				const {
+					introduction,
+					birthday
+				} = this.profileForm
+				request({
+					url: '/api/profile/update',
+					data: {
+						introduction,
+						birthday
+					},
+					method: "POST",
+					success(res) {
+						if(res.statusCode === 200) {
+							uni.setStorageSync('user', res.data.data)
+							uni.showToast({
+								title: '更新成功'
+							})
+						} else {
+							uni.showToast({
+								title: res.data.message,
+								icon: 'error'
+							})
+						}
+					}
+				})
 			})
 		},
 		updateSettings() {
@@ -187,6 +222,7 @@ export default {
 				uni.setStorageSync('user', me)
 				that.me = me
 				that.profileForm = me.profile
+				that.profileForm.birthday = new Date(that.profileForm.birthday)
 				that.settingsForm = me.setting
 				that.user_school = me.school ?? '尚無填寫學校或仍在審核'
 				setTimeout(() => that.update_profile_show = false, 100)
