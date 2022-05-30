@@ -74,7 +74,7 @@
 			},
 			placeholder: {
 				type: String,
-				default: '请选择'
+				default: '請選擇'
 			},
 			emptyTips: {
 				type: String,
@@ -102,7 +102,7 @@
 					'opendb-app-channels': '渠道',
 					'opendb-app-list': '应用'
 				}
-				const common = '请选择'
+				const common = this.placeholder
 				const placeholder = text[this.collection]
 				return placeholder ?
 					common + placeholder :
