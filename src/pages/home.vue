@@ -2,7 +2,7 @@
 	<view class="content">
 		<view style="padding-bottom: 50rpx;">
 			<Tinder ref="tinder" key-name="id" :queue.sync="queue" :offset-y="10" @submit="onSubmit"
-			        style="height: 75vh;margin: 0 50rpx;" v-if="queue.length">
+			        style="height: 65vh;margin: 0 50rpx;" v-if="queue.length">
 				<template v-slot="scope">
 					<view
 						class="pic"
