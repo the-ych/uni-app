@@ -23,6 +23,10 @@
 						<text style="margin: 0 20rpx;color: white;margin-bottom: 30rpx"></text>
 					</view>
 				</template>
+				
+				<image slot="like" src="@/static/buttons/like.png" />
+				<image slot="nope" src="@/static/buttons/hate.png" />
+				<image slot="super" src="@/static/buttons/super.png" />
 			</Tinder>
 			<view v-if="queue.length===0" style="padding: 50% 0;">
 				<image src="@/static/images/logo.png"/>
