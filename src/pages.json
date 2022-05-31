@@ -70,6 +70,10 @@
             "style": {}
         },
         {
+            "path": "pages/post/show",
+            "style": {}
+        },
+        {
             "path": "pages/prove/school",
             "style": {
                 "navigationBarTitleText": "驗證學校"
