@@ -1,13 +1,15 @@
 <template>
 	<scroll-view class="content">
-		<uni-easyinput
+		<uni-search-bar
 			id="searchBar"
-			style="background-color: #ffe3e7;" :input-border="false" prefix-icon="search" suffix-icon="false"
-			@focus="searchBg=true" @blur="searchBg=false"></uni-easyinput>
+			class="uni-mt-10" radius="5" placeholder="搜尋看看～" clearButton="none" cancelButton="none"
+			bgColor="#F7B3CD"
+			@focus="searchBg=true" @blur="searchBg=false"
+		/>
 		<view v-if="searchBg"
-		      :style="`position: fixed;top: ${searchBgTop}px;bottom: 0;left: 0;right: 0;background-color: lightgrey;z-index: 999;padding-top: 30rpx;`"
+		      :style="`position: fixed;top: ${searchBgTop}px;bottom: 0;left: 0;right: 0;background-color: #D2D7D3;z-index: 999;padding-top: 30rpx;`"
 		>
-			132
+			今日熱搜
 		</view>
 		<uni-card :title="post.title" :isFull="true"
 		          :extra="post.anonymous ? '匿名提問' :'一般文章'"
@@ -50,7 +52,7 @@ export default {
 			posts: [],
 			searchBg: false,
 			direction: 'horizontal',
-			searchBgTop: 36,
+			searchBgTop: 40,
 			pattern: {
 				color: '#7A7E83',
 				backgroundColor: '#fff',
@@ -83,7 +85,7 @@ export default {
 	mounted() {
 		const query = uni.createSelectorQuery().in(this)
 		query.select('#searchBar').boundingClientRect(data => {
-			console.log(data);
+			this.searchBgTop = data.height
 		}).exec();
 	},
 	methods: {
@@ -110,7 +112,7 @@ export default {
 		}
 	}
 };
-</script>
+</script> 
 
 <style>
 .content {
