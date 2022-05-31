@@ -4,7 +4,7 @@
 		<view class="tabbar-box-wrap">
 			<view class="tabbar-box">
 				<view class="tabbar-box-item"
-				      @click="goToPage('/pages/tabbar-3-detial/tabbar-3-release/tabbar-3-release')">
+				      @click="goToPage('/pages/post/post')">
 					<image class="box-image" src="@/static/img/release.png" mode="aspectFit"></image>
 					<text class="explain">發文章</text>
 				</view>
@@ -13,7 +13,7 @@
 					<image class="box-image" src="../../../static/img/video.png" mode="aspectFit"></image>
 					<text class="explain">发视频</text>
 				</view>-->
-				<view class="tabbar-box-item" @click="goToPage('/pages/tabbar-3-detial/tabbar-3-qa/tabbar-3-qa')">
+				<view class="tabbar-box-item" @click="goToPage('/pages/post/post?anonymous=1')">
 					<image class="box-image" src="@/static/img/qa.png" mode="aspectFit"></image>
 					<text class="explain">匿名提問</text>
 				</view>
