@@ -58,8 +58,8 @@ export default {
 			pattern: {
 				color: '#7A7E83',
 				backgroundColor: '#fff',
-				selectedColor: '#007AFF',
-				buttonColor: '#007AFF',
+				selectedColor: '#F7B3CD',
+				buttonColor: '#F7B3CD',
 				iconColor: '#fff'
 			},
 			content: [
