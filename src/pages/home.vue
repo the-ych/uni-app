@@ -24,11 +24,11 @@
 				      @click="sendLike(i, post.id)">
 					<image v-if="!post.reacted_by_me" src="@/static/icons/heart-3-line.png" style="width: 30rpx;height: 30rpx;"></image>
 					<image v-if="post.reacted_by_me" src="@/static/icons/heart-3-fill.png" style="width: 30rpx;height: 30rpx;"></image>
-					<text style="font-size: 12pt;margin-left: 20rpx;">({{ post.reactions.length }})</text>
+					<text style="font-size: 12pt;margin-left: 20rpx;">({{ post.reactions_count }})</text>
 				</view>
 				<view class="card-actions-item" style="display: flex;flex-direction: row;align-items: center;" @click="gotoPost(post.id)">
 					<image src="@/static/icons/discuss-line.png" style="width: 30rpx;height: 30rpx;"></image>
-					<text style="font-size: 12pt;margin-left: 20rpx;">(0)</text>
+					<text style="font-size: 12pt;margin-left: 20rpx;">({{ post.comments_count }})</text>
 				</view>
 				<view class="card-actions-item">
 					<image src="@/static/icons/more-fill.png" style="width: 30rpx;height: 30rpx;"></image>
