@@ -93,8 +93,15 @@ output_size = [
 origin_img = Image.open("./src/static/images/logo.png")
 # img_deal = origin_img.resize((300,300),Image.ANTIALIAS) # 转化图片
 for img in output_size:
-	size = img["size"]
-	names = img['names']
-	target = origin_img.resize((size, size),Image.ANTIALIAS)
-	for name in names:
-		target.save(output_path + "/" + name + '.png')
+    size = img["size"]
+    names = img['names']
+    target = origin_img.resize((size, size),Image.ANTIALIAS)
+    for name in names:
+        if 'apple' in name:
+            alpha = target.convert('RGBA').getchannel('A')
+            bg = Image.new("RGBA", target.size, (255, 255, 255) + (255,))
+            bg.paste(target, mask=alpha)
+            bg.convert('RGB')
+            bg.save(output_path + "/" + name + '.png')
+        else:
+            target.save(output_path + "/" + name + '.png')

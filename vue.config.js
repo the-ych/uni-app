@@ -130,7 +130,7 @@ module.exports = {
             favicon32: 'static/favicon/icons/icon_x16.png',
             favicon16: 'static/favicon/icons/icon_x32.png',
             appleTouchIcon: 'static/favicon/icons/apple-touch-icon-152x152.png',
-            maskIcon: 'img/icons/safari-pinned-tab.svg',
+            maskIcon: 'static/favicon/safari-pinned-tab.svg',
             msTileImage: 'static/favicon/icons/msapplication-icon-144x144.png'
         },
         workboxPluginMode: 'GenerateSW',
