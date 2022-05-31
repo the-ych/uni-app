@@ -75,6 +75,7 @@
     "pusher-js": "^7.1.0-beta",
     "regenerator-runtime": "^0.12.1",
     "register-service-worker": "^1.7.1",
+    "uview-ui": "2",
     "vue": "^2.6.11",
     "vue-tinder": "^2.0.3",
     "vuex": "^3.2.0"

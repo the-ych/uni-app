@@ -134,6 +134,7 @@ module.exports = {
             msTileImage: 'static/favicon/icons/msapplication-icon-144x144.png'
         },
         workboxPluginMode: 'GenerateSW',
-    }
+    },
+    transpileDependencies: ['uview-ui']
 }
 
