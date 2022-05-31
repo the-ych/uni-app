@@ -60,10 +60,6 @@
 			"style": {}
 		},
 		{
-			"path": "pages/post/anonymous-ask",
-			"style": {}
-		},
-		{
 			"path": "pages/post/post",
 			"style": {}
 		},
