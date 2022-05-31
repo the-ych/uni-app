@@ -20,9 +20,11 @@
 			<text class="uni-body">{{ post.content }}</text>
 			<view slot="actions" class="card-actions"
 			      style="margin-top: 30rpx;">
-				<view class="card-actions-item" style="display: flex;flex-direction: row;align-items: center;">
-					<image src="@/static/icons/heart-3-line.png" style="width: 30rpx;height: 30rpx;"></image>
-					<text style="font-size: 12pt;margin-left: 20rpx;">(0)</text>
+				<view class="card-actions-item" style="display: flex;flex-direction: row;align-items: center;"
+				      @click="sendLike(i, post.id)">
+					<image v-if="!post.reacted_by_me" src="@/static/icons/heart-3-line.png" style="width: 30rpx;height: 30rpx;"></image>
+					<image v-if="post.reacted_by_me" src="@/static/icons/heart-3-fill.png" style="width: 30rpx;height: 30rpx;"></image>
+					<text style="font-size: 12pt;margin-left: 20rpx;">({{ post.reactions.length }})</text>
 				</view>
 				<view class="card-actions-item" style="display: flex;flex-direction: row;align-items: center;">
 					<image src="@/static/icons/discuss-line.png" style="width: 30rpx;height: 30rpx;"></image>
@@ -109,10 +111,27 @@ export default {
 			uni.navigateTo({
 				url: `/pages/post/create?anonymous=${data.index}`
 			})
+		},
+		sendLike(index, id) {
+			const that = this
+			request({
+				url: `/api/posts/${id}/like`,
+				method: 'POST',
+				auth: true,
+				success(res) {
+					if (res.statusCode !== 200) {
+						uni.showToast({
+							title: res.data.message,
+							icon: 'error'
+						})
+					}
+					that.$set(that.posts, index, res.data.data)
+				}
+			})
 		}
 	}
 };
-</script> 
+</script>
 
 <style>
 .content {
