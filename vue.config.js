@@ -125,7 +125,7 @@ module.exports = {
         themeColor: '#F7B3CD',
         msTileColor: '#F7B3CD',
         appleMobileWebAppCapable: 'yes',
-        appleMobileWebAppStatusBarStyle: 'black',
+        appleMobileWebAppStatusBarStyle: 'black-translucent',
         iconPaths: {
             favicon32: 'static/favicon/icons/icon_x16.png',
             favicon16: 'static/favicon/icons/icon_x32.png',

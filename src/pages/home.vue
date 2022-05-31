@@ -1,22 +1,56 @@
 <template>
-	<view class="content">
-		{{ posts }}
+	<scroll-view class="content">
+		<uni-easyinput
+			id="searchBar"
+			style="background-color: #ffe3e7;" :input-border="false" prefix-icon="search" suffix-icon="false"
+			@focus="searchBg=true" @blur="searchBg=false"></uni-easyinput>
+		<view v-if="searchBg"
+		      :style="`position: fixed;top: ${searchBgTop}px;bottom: 0;left: 0;right: 0;background-color: lightgrey;z-index: 999;padding-top: 30rpx;`"
+		>
+			132
+		</view>
+		<uni-card :title="post.title" :isFull="true"
+		          :extra="post.anonymous ? '匿名提問' :'一般文章'"
+		          :thumbnail="post.avatar"
+		          :class="{'mt-20':i!==0}"
+		          v-for="(post, i) in posts" :key="post.id"
+		>
+			<text class="uni-body">{{ post.content }}</text>
+			<view slot="actions" class="card-actions"
+			      style="margin-top: 30rpx;">
+				<view class="card-actions-item" style="display: flex;flex-direction: row;align-items: center;">
+					<image src="@/static/icons/heart-3-line.png" style="width: 30rpx;height: 30rpx;"></image>
+					<text style="font-size: 12pt;margin-left: 20rpx;">(0)</text>
+				</view>
+				<view class="card-actions-item" style="display: flex;flex-direction: row;align-items: center;">
+					<image src="@/static/icons/discuss-line.png" style="width: 30rpx;height: 30rpx;"></image>
+					<text style="font-size: 12pt;margin-left: 20rpx;">(0)</text>
+				</view>
+				<view class="card-actions-item">
+					<image src="@/static/icons/more-fill.png" style="width: 30rpx;height: 30rpx;"></image>
+				</view>
+			</view>
+		</uni-card>
 
 		<UniFab ref="fab" :pattern="pattern" :content="content" horizontal="right" vertical="bottom"
 		        :direction="direction" @trigger="fabTrigger"/>
-	</view>
+	</scroll-view>
 </template>
 
 <script>
 import request from "../common/request";
 import UniFab from "../uni_modules/uni-fab/components/uni-fab/uni-fab";
+import UniCard from "../uni_modules/uni-card/components/uni-card/uni-card";
+import UniEasyinput from "../uni_modules/uni-easyinput/components/uni-easyinput/uni-easyinput";
 
 export default {
-	components: {UniFab},
+	components: {UniEasyinput, UniFab, UniCard},
 	data() {
 		return {
 			posts: [],
+			searchBg: false,
 			direction: 'horizontal',
+			searchBgTop: 36,
 			pattern: {
 				color: '#7A7E83',
 				backgroundColor: '#fff',
@@ -43,8 +77,14 @@ export default {
 	onLoad() {
 		uni.showLoading({
 			title: '加载中'
-		});
+		})
 		this.fetchData()
+	},
+	mounted() {
+		const query = uni.createSelectorQuery().in(this)
+		query.select('#searchBar').boundingClientRect(data => {
+			console.log(data);
+		}).exec();
 	},
 	methods: {
 		fetchData() {
@@ -63,7 +103,7 @@ export default {
 				},
 			})
 		},
-		fabTrigger(data){
+		fabTrigger(data) {
 			uni.navigateTo({
 				url: `/pages/post/create?anonymous=${data.index}`
 			})
@@ -75,10 +115,76 @@ export default {
 <style>
 .content {
 	text-align: center;
-	height: 400rpx;
-	padding-bottom: 50rpx;
+	background-color: rgb(250, 250, 250);
+	height: calc(100vh - var(--window-bottom));
+}
 
+.mt-20 {
+	margin-top: 20rpx;
+}
+
+.card-actions {
 	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+	height: 45px;
+	border-top: 1px #eee solid;
+}
+
+.card-actions-item {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.card-actions-item-text {
+	font-size: 12px;
+	color: #666;
+	margin-left: 5px
+}
+
+.cover-image {
+	flex: 1;
+	height: 150px
+}
+
+.swiper-box {
+	margin-bottom: 50rpx;
+	height: 200px;
+}
+
+.swiper-item {
+	/* #ifndef APP-NVUE */
+	display: flex;
+	/* #endif */
 	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 200px;
+	color: blue;
+}
+
+.btns {
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 30px;
+	margin: auto;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 300px;
+	max-width: 355px;
+}
+
+.btns image {
+	cursor: pointer;
+	box-shadow: 4rpx 4rpx 2rpx rgba(0, 0, 0, 0.3);
+	/*border: black 1px solid;*/
+	border-radius: 50%;
+	margin: 0 20rpx;
+	width: 100rpx;
+	height: 100rpx;
 }
 </style>

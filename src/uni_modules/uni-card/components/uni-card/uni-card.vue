@@ -158,6 +158,7 @@
 		}
 
 		.uni-card__header {
+			font-weight: 700;
 			display: flex;
 			border-bottom: 1px $uni-border-color solid;
 			flex-direction: row;
@@ -179,7 +180,8 @@
 				width: 40px;
 				height: 40px;
 				overflow: hidden;
-				border-radius: 5px;
+				border-radius: 50%;
+				border: rgb(240,240,240) 2px solid;
 				margin-right: $uni-card-spacing;
 				.uni-card__header-avatar-image {
 					flex: 1;
@@ -226,6 +228,7 @@
 			font-size: 14px;
 			color: $uni-card-content-color;
 			line-height: 22px;
+			text-align: left;
 		}
 
 		.uni-card__actions {

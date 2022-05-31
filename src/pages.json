@@ -4,7 +4,7 @@
         {
             "path": "pages/home",
             "style": {
-                "navigationBarTitleText": "YCH"
+                "navigationStyle": "custom"
             }
         },
         {
@@ -89,10 +89,10 @@
         "selectedColor": "#f33e54",
         "list": [
             {
-                "pagePath": "pages/card",
+                "pagePath": "pages/home",
                 "iconPath": "static/icons/home-line.png",
                 "selectedIconPath": "static/icons/home-fill.png",
-                "text": "首页"
+                "text": "首頁"
             },
             {
                 "pagePath": "pages/chatList",
@@ -101,7 +101,7 @@
                 "text": "聊天列表"
             },
             {
-                "pagePath": "pages/home",
+                "pagePath": "pages/card",
                 "iconPath": "static/icons/door-open-line.png",
                 "selectedIconPath": "static/icons/door-open-fill.png",
                 "text": "翻卡卡"
