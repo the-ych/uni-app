@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.3ae8a54141e11c2e47927da6c80600fb.js"
+  "/precache-manifest.880f5e79f45949ab7f6de906d976f831.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "ych-app"});

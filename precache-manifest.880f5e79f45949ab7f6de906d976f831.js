@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "0bba5035f3fe9711dca3aaa8fbd75d37",
+    "revision": "f62df9de1d6605ec7f54558b8dadce17",
     "url": "/index.html"
   },
   {
@@ -48,24 +48,24 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/static/js/chunk-vendors.3ad4cbb5.js"
   },
   {
-    "revision": "eac845c766e327a90844",
-    "url": "/static/js/index.a997e23d.js"
+    "revision": "cc378ac9a92b505629e6",
+    "url": "/static/js/index.b64475eb.js"
   },
   {
-    "revision": "6a920f3ead8cf76cc437",
-    "url": "/static/js/pages-add.31b4f4f3.js"
+    "revision": "ca7a03f3276f3ace632e",
+    "url": "/static/js/pages-add.3d786c44.js"
   },
   {
-    "revision": "c980d43bf0b93b6435f9",
-    "url": "/static/js/pages-auth-login.aa5b9cb6.js"
+    "revision": "a30547313750c90e9ab1",
+    "url": "/static/js/pages-auth-login.5863031d.js"
   },
   {
-    "revision": "c5f54cf37b75096117e9",
-    "url": "/static/js/pages-auth-login~pages-auth-register~pages-chat~pages-chatList~pages-me~pages-profile~pages-prove-school.cc58258e.js"
+    "revision": "2b5ce5ba56b676e8f5dc",
+    "url": "/static/js/pages-auth-login~pages-auth-register~pages-chat~pages-chatList~pages-home~pages-me~pages-post-create~77c9a9df.f9d2b99c.js"
   },
   {
-    "revision": "67894d2aa8de87a9f64e",
-    "url": "/static/js/pages-auth-login~pages-auth-register~pages-profile~pages-prove-school.fbfd3012.js"
+    "revision": "8727d0caba36064b5e4d",
+    "url": "/static/js/pages-auth-login~pages-auth-register~pages-post-create~pages-profile~pages-prove-school.a71ea429.js"
   },
   {
     "revision": "4c0ce9946ce0db384103",
@@ -76,8 +76,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/static/js/pages-auth-register~pages-profile.2ede5fe6.js"
   },
   {
-    "revision": "af82ed5682c834bbaac3",
-    "url": "/static/js/pages-auth-register~pages-profile~pages-prove-school.fba18cff.js"
+    "revision": "11e0026568fe50367283",
+    "url": "/static/js/pages-auth-register~pages-profile~pages-prove-school.c704cbe2.js"
+  },
+  {
+    "revision": "fe4476d3e66b6a2b813d",
+    "url": "/static/js/pages-card.fd2a5922.js"
   },
   {
     "revision": "e5059a514347f9dad3bd",
@@ -92,8 +96,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/static/js/pages-chat~pages-chatList~pages-notifications.ff30107b.js"
   },
   {
-    "revision": "38079e07f340d3143beb",
-    "url": "/static/js/pages-home.1b7c9448.js"
+    "revision": "598a933817a131bbbb08",
+    "url": "/static/js/pages-home.64725d0c.js"
   },
   {
     "revision": "4cbae2b253a8a34cd56b",
@@ -104,12 +108,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/static/js/pages-notifications.cb7d6048.js"
   },
   {
-    "revision": "3cd0768c75b65b846909",
-    "url": "/static/js/pages-post-anonymous-ask.e9f46746.js"
-  },
-  {
-    "revision": "322ca7a15bf75d9fa22c",
-    "url": "/static/js/pages-post-post.8d854a74.js"
+    "revision": "894f8ef9ade852fb8d73",
+    "url": "/static/js/pages-post-create.d9b650cb.js"
   },
   {
     "revision": "3ef1a0d2d816db7b0cbd",
