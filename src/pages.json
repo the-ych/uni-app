@@ -1,124 +1,123 @@
 {
-	"pages": [
-		//pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-		{
-			"path": "pages/home",
-			"style": {
-				"navigationBarTitleText": "YCH"
-			}
-		},
-		{
-			"path": "pages/relationship/beLiked",
-			"style": {
-              "navigationBarTitleText": "誰喜歡我"
+    "pages": [
+        //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+        {
+            "path": "pages/home",
+            "style": {
+                "navigationBarTitleText": "YCH"
             }
-		},
-		{
-			"path": "pages/profile",
-			"style": {
-              "navigationBarTitleText": "個人資料"
+        },
+        {
+            "path": "pages/card",
+            "style": {
+                "navigationBarTitleText": "翻卡卡"
             }
-		},
-		{
-			"path": "pages/chat",
-			"style": {
-              "navigationBarTitleText": "聊天室"
+        },
+        {
+            "path": "pages/relationship/beLiked",
+            "style": {
+                "navigationBarTitleText": "誰喜歡我"
             }
-		},
-		{
-			"path": "pages/chatList",
-			"style": {
-              "navigationBarTitleText": "聊天列表"
+        },
+        {
+            "path": "pages/profile",
+            "style": {
+                "navigationBarTitleText": "個人資料"
             }
-		},
-		{
-			"path": "pages/notifications",
-			"style": {
-              "navigationBarTitleText": "通知"
+        },
+        {
+            "path": "pages/chat",
+            "style": {
+                "navigationBarTitleText": "聊天室"
             }
-		},
-		{
-			"path": "pages/me",
-			"style": {
-				"navigationBarTitleText": ""
-			}
-		},
-		{
-			"path": "pages/auth/login",
-			"style": {
-				"navigationBarTitleText": "註冊或登入"
-			}
-		},
-		{
-			"path": "pages/auth/register",
-			"style": {
-				"navigationBarTitleText": "註冊帳號"
-			}
-		},
-		{
-			"path": "pages/add",
-			"style": {}
-		},
-		{
-			"path": "pages/post/post",
-			"style": {}
-		},
-		{
-			"path": "pages/prove/school",
-			"style": {
-              "navigationBarTitleText": "驗證學校"}
-		}
-	],
-	"globalStyle": {
-		"navigationBarTextStyle": "white",
-		"navigationBarTitleText": "YCH",
-		"navigationBarBackgroundColor": "#F7B3CD",
-		"backgroundColor": "#FBF9FE"
-	},
-	"tabBar": {
-		"borderStyle": "white",
-		"backgroundColor": "#F7B3CD",
-		"color": "#8F8F94",
-		"selectedColor": "#f33e54",
-		"list": [{
-				"pagePath": "pages/home",
-				"iconPath": "static/img/tabbar/home.png",
-				"selectedIconPath": "static/img/tabbar/homeactive.png",
-				"text": "首页"
-			},
-			{
-				"pagePath": "pages/chatList",
-				"iconPath": "static/img/tabbar/guanzhu.png",
-				"selectedIconPath": "static/img/tabbar/guanzhuactive.png",
-				"text": "聊天列表"
-			},
-			//#ifdef MP-WEIXIN
-			{
-				"pagePath": "pages/add",
-				"iconPath": "static/img/tabbar/add.png",
-				"selectedIconPath": "static/img/tabbar/addactive.png",
-				"text": "发布"
-			},
-			//#endif
-			//#ifndef MP-WEIXIN
-			{
-				"pagePath": "pages/add",
-				"iconPath": "static/img/tabbar/add.png",
-				"selectedIconPath": "static/img/tabbar/addactive.png"
-			},
-			//#endif
-			{
-				"pagePath": "pages/notifications",
-				"iconPath": "static/img/tabbar/news.png",
-				"selectedIconPath": "static/img/tabbar/newsactive.png",
-				"text": "通知"
-			},
-			{
-				"pagePath": "pages/me",
-				"iconPath": "static/img/tabbar/me.png",
-				"selectedIconPath": "static/img/tabbar/meactive.png",
-				"text": "我"
-			}
-		]
-	}
+        },
+        {
+            "path": "pages/chatList",
+            "style": {
+                "navigationBarTitleText": "聊天列表"
+            }
+        },
+        {
+            "path": "pages/notifications",
+            "style": {
+                "navigationBarTitleText": "通知"
+            }
+        },
+        {
+            "path": "pages/me",
+            "style": {
+                "navigationBarTitleText": ""
+            }
+        },
+        {
+            "path": "pages/auth/login",
+            "style": {
+                "navigationBarTitleText": "註冊或登入"
+            }
+        },
+        {
+            "path": "pages/auth/register",
+            "style": {
+                "navigationBarTitleText": "註冊帳號"
+            }
+        },
+        {
+            "path": "pages/add",
+            "style": {}
+        },
+        {
+            "path": "pages/post/create",
+            "style": {}
+        },
+        {
+            "path": "pages/prove/school",
+            "style": {
+                "navigationBarTitleText": "驗證學校"
+            }
+        }
+    ],
+    "globalStyle": {
+        "navigationBarTextStyle": "white",
+        "navigationBarTitleText": "YCH",
+        "navigationBarBackgroundColor": "#F7B3CD",
+        "backgroundColor": "#FBF9FE"
+    },
+    "tabBar": {
+        "borderStyle": "white",
+        "backgroundColor": "#F7B3CD",
+        "color": "#8F8F94",
+        "selectedColor": "#f33e54",
+        "list": [
+            {
+                "pagePath": "pages/card",
+                "iconPath": "static/icons/home-line.png",
+                "selectedIconPath": "static/icons/home-fill.png",
+                "text": "首页"
+            },
+            {
+                "pagePath": "pages/chatList",
+                "iconPath": "static/icons/chat-3-line.png",
+                "selectedIconPath": "static/icons/chat-3-fill.png",
+                "text": "聊天列表"
+            },
+            {
+                "pagePath": "pages/home",
+                "iconPath": "static/icons/door-open-line.png",
+                "selectedIconPath": "static/icons/door-open-fill.png",
+                "text": "翻卡卡"
+            },
+            {
+                "pagePath": "pages/notifications",
+                "iconPath": "static/icons/notification-line.png",
+                "selectedIconPath": "static/icons/notification-fill.png",
+                "text": "通知"
+            },
+            {
+                "pagePath": "pages/me",
+                "iconPath": "static/icons/user-line.png",
+                "selectedIconPath": "static/icons/user-fill.png",
+                "text": "我"
+            }
+        ]
+    }
 }
