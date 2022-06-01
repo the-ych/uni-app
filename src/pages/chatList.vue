@@ -23,7 +23,7 @@
 		<view v-if="chats.length===0" style="margin-top: 50%;display: flex; align-self: center;flex-direction: column;justify-content: center;align-items: center">
 			<image src="@/static/images/logo.png"/>
 			<text class="uni-h6 block">目前沒有人陪你聊天ＱＱ</text>
-			<text class="uni-h6 block">請持續翻卡卡</text>
+			<text class="uni-h6 block">請持續翻翻卡</text>
 		</view>
 	</view>
 </template>

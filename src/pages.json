@@ -13,7 +13,7 @@
         {
             "path": "pages/card",
             "style": {
-                "navigationBarTitleText": "翻卡卡"
+                "navigationBarTitleText": "翻翻卡"
             }
         },
         {
@@ -111,7 +111,7 @@
                 "pagePath": "pages/card",
                 "iconPath": "static/icons/door-open-line.png",
                 "selectedIconPath": "static/icons/door-open-fill.png",
-                "text": "翻卡卡"
+                "text": "翻翻卡"
             },
             {
                 "pagePath": "pages/notifications",
