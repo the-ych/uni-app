@@ -1,48 +1,52 @@
 <template>
-	<scroll-view class="content">
-		<uni-search-bar
-			:style="{paddingTop: statusbarHeight}"
-			id="searchBar"
-			class="uni-mt-10" radius="5" placeholder="搜尋看看～" clearButton="none" cancelButton="none"
-			bgColor="#F7B3CD"
-			@focus="searchBg=true" @blur="searchBg=false"
-		/>
+	<view class="content">
+		<view
+			:style="{position:'fixed',right: 0,left: 0, zIndex:888,top: 0,paddingTop:statusbarHeight + 'px', backgroundColor: '#F7B3CD'}">
+			<uni-search-bar
+				id="searchBar"
+				class="uni-mt-10" radius="5" placeholder="搜尋看看～" clearButton="none" cancelButton="none"
+				bgColor="#F7B3CD"
+				@focus="searchBg=true" @blur="searchBg=false"
+			/>
+		</view>
 		<view v-if="searchBg"
 		      :style="`position: fixed;top: ${searchBgTop}px;bottom: 0;left: 0;right: 0;background-color: #D2D7D3;z-index: 999;padding-top: 30rpx;`"
 		>
 			今日熱搜
 		</view>
-		<uni-card :title="post.title" :isFull="true"
-		          :extra="post.anonymous ? '匿名提問' :'一般文章'"
-		          :thumbnail="post.avatar"
-		          :class="{'mt-20':i!==0}"
-		          v-for="(post, i) in posts" :key="post.id"
-		>
-			<text class="uni-body">{{ post.content }}</text>
-			<view slot="actions" class="card-actions"
-			      style="margin-top: 30rpx;">
-				<view class="card-actions-item" style="display: flex;flex-direction: row;align-items: center;"
-				      @click="sendLike(i, post.id)">
-					<image v-if="!post.reacted_by_me" src="@/static/icons/heart-3-line.png"
-					       style="width: 30rpx;height: 30rpx;"></image>
-					<image v-if="post.reacted_by_me" src="@/static/icons/heart-3-fill.png"
-					       style="width: 30rpx;height: 30rpx;"></image>
-					<text style="font-size: 12pt;margin-left: 20rpx;">({{ post.reactions_count }})</text>
+		<scroll-view :style="{paddingTop: searchBgTop+'px', paddingBottom: 'var(--window-bottom)'}">
+			<uni-card :title="post.title" :isFull="true"
+			          :extra="post.anonymous ? '匿名提問' :'一般文章'"
+			          :thumbnail="post.avatar"
+			          :class="{'mt-20':i!==0}"
+			          v-for="(post, i) in posts" :key="post.id"
+			>
+				<text class="uni-body">{{ post.content }}</text>
+				<view slot="actions" class="card-actions"
+				      style="margin-top: 30rpx;">
+					<view class="card-actions-item" style="display: flex;flex-direction: row;align-items: center;"
+					      @click="sendLike(i, post.id)">
+						<image v-if="!post.reacted_by_me" src="@/static/icons/heart-3-line.png"
+						       style="width: 30rpx;height: 30rpx;"></image>
+						<image v-if="post.reacted_by_me" src="@/static/icons/heart-3-fill.png"
+						       style="width: 30rpx;height: 30rpx;"></image>
+						<text style="font-size: 12pt;margin-left: 20rpx;">({{ post.reactions_count }})</text>
+					</view>
+					<view class="card-actions-item" style="display: flex;flex-direction: row;align-items: center;"
+					      @click="gotoPost(post.id)">
+						<image src="@/static/icons/discuss-line.png" style="width: 30rpx;height: 30rpx;"></image>
+						<text style="font-size: 12pt;margin-left: 20rpx;">({{ post.comments_count }})</text>
+					</view>
+					<view class="card-actions-item">
+						<image src="@/static/icons/more-fill.png" style="width: 30rpx;height: 30rpx;"></image>
+					</view>
 				</view>
-				<view class="card-actions-item" style="display: flex;flex-direction: row;align-items: center;"
-				      @click="gotoPost(post.id)">
-					<image src="@/static/icons/discuss-line.png" style="width: 30rpx;height: 30rpx;"></image>
-					<text style="font-size: 12pt;margin-left: 20rpx;">({{ post.comments_count }})</text>
-				</view>
-				<view class="card-actions-item">
-					<image src="@/static/icons/more-fill.png" style="width: 30rpx;height: 30rpx;"></image>
-				</view>
-			</view>
-		</uni-card>
+			</uni-card>
 
-		<UniFab ref="fab" :pattern="pattern" :content="content" horizontal="right" vertical="bottom"
-		        :direction="direction" @trigger="fabTrigger"/>
-	</scroll-view>
+			<UniFab ref="fab" :pattern="pattern" :content="content" horizontal="right" vertical="bottom"
+			        :direction="direction" @trigger="fabTrigger"/>
+		</scroll-view>
+	</view>
 </template>
 
 <script>
@@ -80,22 +84,38 @@ export default {
 					active: false
 				},
 			],
-			statusbarHeight: 0
+			statusbarHeight: '47px'
 		};
 	},
-	onLoad() {
+	onLoad(options) {
+		if (options.action === 'toast') {
+			if (options.type) {
+				uni.showToast({
+					title: options.message,
+					icon: options.type
+				})
+			} else {
+				uni.showToast({
+					title: options.message,
+				})
+			}
+		}
 		uni.showLoading({
 			title: '加载中'
 		})
-		this.statusbarHeight = uni.getSystemInfoSync().statusBarHeight + 'px'
-		// alert(uni.getSystemInfoSync().statusBarHeight)
+
+		setTimeout(() => {
+			this.statusbarHeight = uni.getSystemInfoSync().statusBarHeight
+
+			const query = uni.createSelectorQuery().in(this)
+			query.select('#searchBar').boundingClientRect(data => {
+				this.searchBgTop = data.height + this.statusbarHeight
+			}).exec();
+		}, 100)
+
 		this.fetchData()
 	},
 	mounted() {
-		const query = uni.createSelectorQuery().in(this)
-		query.select('#searchBar').boundingClientRect(data => {
-			this.searchBgTop = data.height
-		}).exec();
 	},
 	methods: {
 		fetchData() {

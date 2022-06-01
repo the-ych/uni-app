@@ -63,7 +63,7 @@ export default {
 						console.log(res.data.message)
 					} else {
 						uni.reLaunch({
-							url: '/pages/me?action=toast&message=發文成功'
+							url: '/pages/home?action=toast&message=發文成功'
 						})
 					}
 				}
