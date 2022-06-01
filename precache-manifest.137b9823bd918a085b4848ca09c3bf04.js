@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "1150e013ca1a00f00c68f288075a8f19",
+    "revision": "41092aec0d71ca46ef15e03cb27f9441",
     "url": "/index.html"
   },
   {
@@ -48,8 +48,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/static/js/chunk-vendors.7aa0c480.js"
   },
   {
-    "revision": "79e5b5fd17db4d5fc918",
-    "url": "/static/js/index.0fb5c1ce.js"
+    "revision": "84710ca601479f07ed09",
+    "url": "/static/js/index.9d5122f7.js"
   },
   {
     "revision": "ca7a03f3276f3ace632e",
@@ -80,36 +80,36 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/static/js/pages-auth-register~pages-profile~pages-prove-school.a6545135.js"
   },
   {
-    "revision": "4f2d7144bad2a5432713",
-    "url": "/static/js/pages-card.0dac0d78.js"
+    "revision": "2940d4fdf2cae9ed366b",
+    "url": "/static/js/pages-card.9586652b.js"
   },
   {
     "revision": "e5059a514347f9dad3bd",
     "url": "/static/js/pages-chat.2dad99a3.js"
   },
   {
-    "revision": "587bf8a3562a0ffe4c83",
-    "url": "/static/js/pages-chatList.8ee6c8e6.js"
+    "revision": "3a7583e8dc595bff7278",
+    "url": "/static/js/pages-chatList.33abb511.js"
   },
   {
     "revision": "ebf0207972d0abdffcc0",
     "url": "/static/js/pages-chat~pages-chatList~pages-notifications~pages-post-show.d340bcb8.js"
   },
   {
-    "revision": "c6fd604ba8e69dc35390",
-    "url": "/static/js/pages-home.e6aa91eb.js"
+    "revision": "29f1ab5b12f12b72b5d8",
+    "url": "/static/js/pages-home.231455c6.js"
   },
   {
     "revision": "4cbae2b253a8a34cd56b",
     "url": "/static/js/pages-me.5b7b0216.js"
   },
   {
-    "revision": "2dc563affbd1845d1a88",
-    "url": "/static/js/pages-notifications.cb7d6048.js"
+    "revision": "b3ebde2e3c0cc80a6b7e",
+    "url": "/static/js/pages-notifications.5d754f81.js"
   },
   {
-    "revision": "894f8ef9ade852fb8d73",
-    "url": "/static/js/pages-post-create.d9b650cb.js"
+    "revision": "8bab2c18134f490640c3",
+    "url": "/static/js/pages-post-create.e20f82e6.js"
   },
   {
     "revision": "a87764e486296ac20068",
