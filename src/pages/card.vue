@@ -250,22 +250,21 @@ export default {
 }
 
 .btns {
-	position: absolute;
+	position: fixed;
 	left: 0;
 	right: 0;
-	bottom: 30px;
+	bottom: calc(var(--window-bottom) + 10px);
 	margin: auto;
 	display: flex;
 	align-items: center;
-	justify-content: center;
-	min-width: 300px;
-	max-width: 355px;
+	justify-content: space-between;
+	max-width: 300px;
 }
 
 .btns image {
 	cursor: pointer;
 	box-shadow: 4rpx 4rpx 2rpx rgba(0, 0, 0, 0.3);
-	/*border: black 1px solid;*/
+	border: 0.1px lightgrey solid;
 	border-radius: 50%;
 	margin: 0 20rpx;
 	width: 100rpx;
