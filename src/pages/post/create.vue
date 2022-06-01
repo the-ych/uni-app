@@ -13,7 +13,7 @@
 			<uni-forms ref="form" :model-value="formData" :rules="rules">
 				<uni-forms-item label="類型" required>
 					<UniSegmentedControl :current="formData.anonymous" :values="['發文', '匿名發問']" styleType="button"
-					                     activeColor="#4cd964"></UniSegmentedControl>
+					                     activeColor="#4cd964" @clickItem="changePostType"></UniSegmentedControl>
 				</uni-forms-item>
 				<uni-forms-item label="標題" required>
 					<uni-easyinput v-model="formData.title" placeholder="文章標題" suffix-icon="false"></uni-easyinput>
@@ -52,6 +52,7 @@ export default {
 	},
 	methods: {
 		submitPost() {
+			console.log(this.formData)
 			request({
 				url: '/api/posts',
 				method: "POST",
@@ -67,6 +68,12 @@ export default {
 					}
 				}
 			})
+		},
+		changePostType(e) {
+			console.log(e)
+			if (this.formData.anonymous !== e.currentIndex) {
+				this.formData.anonymous = e.currentIndex;
+			}
 		}
 	}
 }
