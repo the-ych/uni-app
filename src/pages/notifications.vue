@@ -1,12 +1,12 @@
 <template>
-	<view class="content">
+	<scroll-view class="content">
 		<view v-for="notification in notifications" :key="notification.id">
 			<matched-notification
 				v-if="notification.type.endsWith('MatchedNotification')"
 				:notification="notification"
 			></matched-notification>
 		</view>
-	</view>
+	</scroll-view>
 </template>
 
 <script>
@@ -55,7 +55,7 @@ export default {
 <style>
 .content {
 	text-align: center;
-	height: 400rpx;
+	height: calc(100vh - var(--window-bottom));
 	padding-bottom: 50rpx;
 
 	display: flex;

@@ -203,7 +203,7 @@ export default {
 <style>
 .content {
 	text-align: center;
-	height: 400rpx;
+	height: calc(100vh - var(--window-bottom));
 	margin-top: 20rpx;
 }
 
