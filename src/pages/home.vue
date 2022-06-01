@@ -88,7 +88,7 @@ export default {
 			title: '加载中'
 		})
 		this.statusbarHeight = uni.getSystemInfoSync().statusBarHeight + 'px'
-		alert(uni.getSystemInfoSync().statusBarHeight)
+		// alert(uni.getSystemInfoSync().statusBarHeight)
 		this.fetchData()
 	},
 	mounted() {
