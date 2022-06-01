@@ -1,6 +1,7 @@
 <template>
 	<scroll-view class="content">
 		<uni-search-bar
+			:style="{paddingTop: statusbarHeight}"
 			id="searchBar"
 			class="uni-mt-10" radius="5" placeholder="搜尋看看～" clearButton="none" cancelButton="none"
 			bgColor="#F7B3CD"
@@ -22,11 +23,14 @@
 			      style="margin-top: 30rpx;">
 				<view class="card-actions-item" style="display: flex;flex-direction: row;align-items: center;"
 				      @click="sendLike(i, post.id)">
-					<image v-if="!post.reacted_by_me" src="@/static/icons/heart-3-line.png" style="width: 30rpx;height: 30rpx;"></image>
-					<image v-if="post.reacted_by_me" src="@/static/icons/heart-3-fill.png" style="width: 30rpx;height: 30rpx;"></image>
+					<image v-if="!post.reacted_by_me" src="@/static/icons/heart-3-line.png"
+					       style="width: 30rpx;height: 30rpx;"></image>
+					<image v-if="post.reacted_by_me" src="@/static/icons/heart-3-fill.png"
+					       style="width: 30rpx;height: 30rpx;"></image>
 					<text style="font-size: 12pt;margin-left: 20rpx;">({{ post.reactions_count }})</text>
 				</view>
-				<view class="card-actions-item" style="display: flex;flex-direction: row;align-items: center;" @click="gotoPost(post.id)">
+				<view class="card-actions-item" style="display: flex;flex-direction: row;align-items: center;"
+				      @click="gotoPost(post.id)">
 					<image src="@/static/icons/discuss-line.png" style="width: 30rpx;height: 30rpx;"></image>
 					<text style="font-size: 12pt;margin-left: 20rpx;">({{ post.comments_count }})</text>
 				</view>
@@ -75,13 +79,16 @@ export default {
 					text: '匿名提問',
 					active: false
 				},
-			]
+			],
+			statusbarHeight: 0
 		};
 	},
 	onLoad() {
 		uni.showLoading({
 			title: '加载中'
 		})
+		this.statusbarHeight = uni.getSystemInfoSync().statusBarHeight + 'px'
+		alert(uni.getSystemInfoSync().statusBarHeight)
 		this.fetchData()
 	},
 	mounted() {
@@ -129,7 +136,7 @@ export default {
 				}
 			})
 		},
-		gotoPost(id){
+		gotoPost(id) {
 			uni.navigateTo({
 				url: `/pages/post/show?post=${id}`
 			})
