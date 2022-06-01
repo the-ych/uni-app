@@ -19,7 +19,7 @@
 			          :extra="post.anonymous ? '匿名提問' :'一般文章'"
 			          :thumbnail="post.avatar"
 			          :class="{'mt-20':i!==0}"
-			          v-for="(post, i) in posts" :key="post.id"
+			          v-for="(post, i) in posts" :key="post.request_id + post.id"
 			>
 				<text class="uni-body">{{ post.content }}</text>
 				<view slot="actions" class="card-actions"
@@ -43,6 +43,7 @@
 				</view>
 			</uni-card>
 
+			<u-loadmore :status="loadingStatus"/>
 			<UniFab ref="fab" :pattern="pattern" :content="content" horizontal="right" vertical="bottom"
 			        :direction="direction" @trigger="fabTrigger"/>
 		</scroll-view>
@@ -84,7 +85,8 @@ export default {
 					active: false
 				},
 			],
-			statusbarHeight: '47px'
+			statusbarHeight: '47px',
+			loadingStatus: 'loadmore'
 		};
 	},
 	onLoad(options) {
@@ -115,21 +117,27 @@ export default {
 
 		this.fetchData()
 	},
-	mounted() {
-	},
 	methods: {
-		fetchData() {
+		/**
+		 * @param refreshAll: 清掉以前的，全部重整
+		 * */
+		fetchData(refreshAll) {
 			request({
 				url: '/api/posts',
 				auth: true,
 				success: (res) => {
+					this.loadingStatus = 'loadmore'
 					uni.hideLoading({
 						title: '加载中'
 					});
 					if (res.statusCode !== 200) {
 						console.log(res.data.message)
 					} else {
-						this.posts = res.data
+						if (refreshAll) {
+							this.posts = res.data
+						} else {
+							this.posts = this.posts.concat(res.data)
+						}
 					}
 				},
 			})
@@ -161,6 +169,14 @@ export default {
 				url: `/pages/post/show?post=${id}`
 			})
 		}
+	},
+	onReachBottom() {
+		this.loadingStatus = 'loading';
+		this.fetchData()
+	},
+	onPullDownRefresh() {
+		this.fetchData(true)
+		uni.stopPullDownRefresh()
 	}
 };
 </script>
